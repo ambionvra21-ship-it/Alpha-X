@@ -1,25 +1,16 @@
-// --- Project Devilmycry666 V-1 Core Engine ---
+// --- Project Devilmycry666 Core Architecture Engine ---
 
-// Application State
+// Application State Layer
 const appState = {
     expenses: [
         { id: 1, title: 'Initial Project Seed', amount: 150.00 }
     ],
     currentCurrency: 'PHP',
-    currencySymbols: {
-        PHP: '₱',
-        USD: '\$',
-        EUR: '€'
-    },
-    // Simple conversion factors relative to PHP baseline for utility math
-    conversionRates: {
-        PHP: 1,
-        USD: 0.018,
-        EUR: 0.017
-    }
+    currencySymbols: { PHP: '₱', USD: '\$', EUR: '€' },
+    conversionRates: { PHP: 1, USD: 0.018, EUR: 0.017 }
 };
 
-// --- Module 1: Expense Tracker Core Functions ---
+// --- MODULE 1: EXPENSE TRACKER ---
 function renderExpenses() {
     const listContainer = document.getElementById('expense-list');
     if (!listContainer) return;
@@ -30,15 +21,14 @@ function renderExpenses() {
 
     appState.expenses.forEach(item => {
         const convertedAmount = (item.amount * rate).toFixed(2);
-        
         const li = document.createElement('li');
         li.className = 'list-item';
         li.innerHTML = `
             <span>${item.title}</span>
             <span class="amount-tag">${symbol}${convertedAmount}</span>
             <div class="action-buttons">
-                <button class="btn-icon edit-btn" onclick="editExpense(${item.id})" title="Edit"><i class="fa-solid fa-pen"></i></button>
-                <button class="btn-icon delete-btn" onclick="deleteExpense(${item.id})" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn-icon edit-btn" onclick="editExpense(${item.id})"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-icon delete-btn" onclick="deleteExpense(${item.id})"><i class="fa-solid fa-trash"></i></button>
             </div>
         `;
         listContainer.appendChild(li);
@@ -46,17 +36,8 @@ function renderExpenses() {
 }
 
 function addExpense(title, amount) {
-    // Standardize input back to base PHP representation relative to active symbol setting
     const rate = appState.conversionRates[appState.currentCurrency];
-    const baseAmount = amount / rate;
-
-    const newExpense = {
-        id: Date.now(),
-        title: title,
-        amount: baseAmount
-    };
-
-    appState.expenses.push(newExpense);
+    appState.expenses.push({ id: Date.now(), title: title, amount: amount / rate });
     renderExpenses();
 }
 
@@ -66,169 +47,90 @@ function deleteExpense(id) {
 }
 
 function editExpense(id) {
-    const item = appState.expenses.find(item => item.id === id);
+    const item = appState.expenses.find(i => i.id === id);
     if (!item) return;
-    
     const rate = appState.conversionRates[appState.currentCurrency];
-    const activeViewAmount = (item.amount * rate).toFixed(2);
-    
     const newTitle = prompt("Edit description:", item.title);
-    const newAmount = prompt(`Edit amount (${appState.currentCurrency}):`, activeViewAmount);
-    
-    if (newTitle !== null && newAmount !== null && !isNaN(parseFloat(newAmount))) {
+    const newAmount = prompt(`Edit amount (${appState.currentCurrency}):`, (item.amount * rate).toFixed(2));
+    if (newTitle && newAmount && !isNaN(parseFloat(newAmount))) {
         item.title = newTitle;
         item.amount = parseFloat(newAmount) / rate;
         renderExpenses();
     }
 }
 
-// --- Module 2: Quick Snippets Operations ---
+// --- MODULE 2 & 4: CLIPBOARD & EMAIL DRAFTER ---
 function initializeClipboardManager() {
     const holdBtn = document.querySelector('#clipboard-manager .btn-secondary');
     const inputArea = document.getElementById('snippet-input');
     const tagsContainer = document.querySelector('.quick-tags');
-
     if (holdBtn && inputArea && tagsContainer) {
         holdBtn.addEventListener('click', () => {
             const text = inputArea.value.trim();
             if (!text) return;
-
-            // Generate a shortened title label for the custom snippet chip
-            const displayLabel = text.length > 15 ? text.substring(0, 12) + '...' : text;
-            
-            const newBtn = document.createElement('button');
-            newBtn.className = 'tag-btn';
-            newBtn.textContent = displayLabel;
-            newBtn.addEventListener('click', () => {
-                navigator.clipboard.writeText(text);
-                alert('Snippet copied to your system clipboard!');
-            });
-
-            tagsContainer.appendChild(newBtn);
+            const btn = document.createElement('button');
+            btn.className = 'tag-btn';
+            btn.textContent = text.length > 15 ? text.substring(0, 12) + '...' : text;
+            btn.addEventListener('click', () => { navigator.clipboard.writeText(text); });
+            tagsContainer.appendChild(btn);
             inputArea.value = '';
         });
     }
 }
 
-// --- Module 4: Smart Email Custom Text Structuring ---
 function initializeEmailDrafter() {
     const draftBtn = document.querySelector('#email-drafter .btn-primary');
     const toneSelect = document.getElementById('email-tone');
     const contextArea = document.getElementById('email-context');
-
     if (draftBtn && toneSelect && contextArea) {
         draftBtn.addEventListener('click', () => {
-            const tone = toneSelect.value;
-            const context = contextArea.value.trim() || '[No details provided]';
-            
-            let structuredOutput = '';
-            if (tone === 'formal') {
-                structuredOutput = `Dear Sir/Madam,\n\nI am writing to follow up regarding the following details:\n${context}\n\nPlease let me know your thoughts at your earliest convenience.\n\nBest regards,\n[Your Name]`;
-            } else if (tone === 'casual') {
-                structuredOutput = `Hey there,\n\nJust wanted to quickly drop a line about this:\n${context}\n\nLet me know what you think! Catch you later.\n\nCheers,\n[Your Name]`;
-            } else if (tone === 'urgent') {
-                structuredOutput = `URGENT NOTICE:\n\nPlease review the following details immediately:\n${context}\n\nAction is required regarding this matter as soon as possible.\n\nThank you,\n[Your Name]`;
-            }
-            
-            contextArea.value = structuredOutput;
+            const context = contextArea.value.trim() || '[No context]';
+            contextArea.value = `[${toneSelect.value.toUpperCase()} DRAFT]\nRegarding your request:\n${context}\n\nBest regards,\n[Developer Workspace]`;
         });
     }
 }
 
-// --- Event Binding & Initialization Entry Point ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Initial Render
-    renderExpenses();
-    initializeClipboardManager();
-    initializeEmailDrafter();
-
-    // Setup Currency Selector Change Event
-    const currencyDropdown = document.getElementById('currency-select');
-    if (currencyDropdown) {
-        currencyDropdown.addEventListener('change', (e) => {
-            appState.currentCurrency = e.target.value;
-            renderExpenses();
-        });
-    }
-
-    // Setup Form Submit Event for New Expenses
-    const expenseForm = document.getElementById('expense-form');
-    if (expenseForm) {
-        expenseForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const titleInput = document.getElementById('exp-title');
-            const amountInput = document.getElementById('exp-amount');
-            
-            if (titleInput && amountInput) {
-                const title = titleInput.value.trim();
-                const amount = parseFloat(amountInput.value);
-                
-                if (title && !isNaN(amount)) {
-                    addExpense(title, amount);
-                    titleInput.value = '';
-                    amountInput.value = '';
-                }
-            }
-        });
-    }
-});
-
-// --- Version 2 (V-2) Extended Logic Engines ---
-
-document.addEventListener('DOMContentLoaded', () => {
-    initializeAIWorkspace();
-    initializeAISearch();
-    initializeAPITester();
-});
-
-// AI Writing Simulation Core
+// --- BATCH 2: VERSION 2 (V-2 AI WORKSPACE & DEVELOPER SANDBOX) ---
 function initializeAIWorkspace() {
     const submitBtn = document.getElementById('ai-submit-btn');
     const promptInput = document.getElementById('ai-prompt-input');
     const chatOutput = document.getElementById('ai-chat-output');
-
     if (!submitBtn || !promptInput || !chatOutput) return;
 
     submitBtn.addEventListener('click', () => {
         const promptText = promptInput.value.trim();
         if (!promptText) return;
 
-        // Render User Input bubble
         const userDiv = document.createElement('div');
         userDiv.className = 'ai-bubble user-msg';
         userDiv.textContent = promptText;
         chatOutput.appendChild(userDiv);
         promptInput.value = '';
 
-        // Simulate AI Core processing streaming text completion
         setTimeout(() => {
             const replyDiv = document.createElement('div');
             replyDiv.className = 'ai-bubble reply-msg';
             replyDiv.innerHTML = `<strong>AI Response:</strong> Completed task matching parameter blueprint details. Output script or content draft compiled safely.`;
             chatOutput.appendChild(replyDiv);
             chatOutput.scrollTop = chatOutput.scrollHeight;
-        }, 600);
+        }, 500);
     });
 }
 
-// AI Context Search Parsing Engine
 function initializeAISearch() {
     const searchBtn = document.getElementById('ai-search-btn');
     const queryInput = document.getElementById('ai-search-query');
     const outputPane = document.getElementById('ai-search-results');
-
     if (!searchBtn || !queryInput || !outputPane) return;
 
     searchBtn.addEventListener('click', () => {
         const query = queryInput.value.trim();
         if (!query) return;
-
         outputPane.classList.remove('hidden');
         outputPane.textContent = `[Parsed Knowledge Base Layer Match]\nQuery: "${query}"\nFilters Applied: Status = Active, Mode = Raw Structural Isolation.\nNo tracker algorithmic biases discovered. Content optimized for compilation.`;
     });
 }
 
-// API Endpoint Request & JSON Parsing Layout Controller
 function initializeAPITester() {
     const sendBtn = document.getElementById('api-send-btn');
     const methodSelect = document.getElementById('api-method');
@@ -245,13 +147,9 @@ function initializeAPITester() {
     if (jsonInput && formatBtn) {
         formatBtn.addEventListener('click', () => {
             const rawString = jsonInput.value.trim();
-            if (!rawString) {
-                alert("Please paste a raw JSON string to format.");
-                return;
-            }
+            if (!rawString) return;
             try {
-                const parsedObject = JSON.parse(rawString);
-                jsonInput.value = JSON.stringify(parsedObject, null, 4);
+                jsonInput.value = JSON.stringify(JSON.parse(rawString), null, 4);
             } catch (err) {
                 alert(`Invalid JSON Structural Format Detected:\n${err.message}`);
             }
@@ -259,62 +157,46 @@ function initializeAPITester() {
     }
 }
 
-// Developer Sandbox Utilities Actions
 function runBase64Encode() {
     const input = document.getElementById('sandbox-input');
     const output = document.getElementById('sandbox-output-pane');
-    if (!input || !output || !input.value.trim()) return;
-
-    output.classList.remove('hidden');
-    output.textContent = `Base64 Encoded Result:\n${btoa(input.value.trim())}`;
+    if (input && output && input.value.trim()) {
+        output.classList.remove('hidden');
+        output.textContent = `Base64 Encoded Result:\n${btoa(input.value.trim())}`;
+    }
 }
 
 function runRegexCheck() {
     const input = document.getElementById('sandbox-input');
     const output = document.getElementById('sandbox-output-pane');
-    if (!input || !output || !input.value.trim()) return;
-
-    output.classList.remove('hidden');
-    const alphaNumericRegex = /^[a-zA-Z0-9 ]+\$/;
-    const passes = alphaNumericRegex.test(input.value.trim());
-    output.textContent = `Regex Match Engine Rule ([a-zA-Z0-9]):\n${passes ? '✔ PASS - Match Standard Verified' : '❌ FAIL - Invalid Tokens Discovered'}`;
+    if (input && output && input.value.trim()) {
+        output.classList.remove('hidden');
+        const passes = /^[a-zA-Z0-9 ]+\$/.test(input.value.trim());
+        output.textContent = `Regex Match Engine Rule ([a-zA-Z0-9]):\n${passes ? '✔ PASS - Match Standard Verified' : '❌ FAIL - Invalid Tokens Discovered'}`;
+    }
 }
 
 function generateMockQR() {
     const input = document.getElementById('sandbox-input');
     const output = document.getElementById('sandbox-output-pane');
-    if (!input || !output || !input.value.trim()) return;
-
-    output.classList.remove('hidden');
-    output.textContent = `[Generated Mock QR Pointer Matrix Data]\nTarget: data:image/png;base64,...(Linked to value: "${input.value.trim()}")`;
+    if (input && output && input.value.trim()) {
+        output.classList.remove('hidden');
+        output.textContent = `[Generated Mock QR Pointer Matrix Data]\nTarget: data:image/png;base64,...(Linked to value: "${input.value.trim()}")`;
+    }
 }
 
-// Browser Session Local Account Profile Persistence Mock
-function triggerLocalBackup() {
-    alert("Application data array models synced down into temporary browser state local snapshot layout.");
-}
+function triggerLocalBackup() { alert("Application data array models synced down into temporary browser state local snapshot layout."); }
+function triggerCloudSync() { alert("Account profile configurations saved and synced upstream to secure project cloud infrastructure layout."); }
 
-function triggerCloudSync() {
-    alert("Account profile configurations saved and synced upstream to secure project cloud infrastructure layout.");
-}
-
-// --- Version 3 (V-3) Utility & Health Engines ---
-
-document.addEventListener('DOMContentLoaded', () => {
-    initializePomodoroTimer();
-    startLiveClockEngine();
-});
-
-// Pomodoro Countdown Mechanism Variables
+// --- BATCH 3: VERSION 3 (V-3 POMODORO, CALCULATOR & HEALTH METRICS) ---
 let pomodoroInterval = null;
-let pomodoroSecondsLeft = 1500; // 25 minutes baseline
+let pomodoroSecondsLeft = 1500;
 
 function initializePomodoroTimer() {
     const display = document.getElementById('pomodoro-display');
     const startBtn = document.getElementById('pomodoro-start');
     const pauseBtn = document.getElementById('pomodoro-pause');
     const resetBtn = document.getElementById('pomodoro-reset');
-
     if (!display || !startBtn || !pauseBtn || !resetBtn) return;
 
     function updateDisplayString() {
@@ -350,7 +232,6 @@ function initializePomodoroTimer() {
     });
 }
 
-// Interactive Calculator Screen Controls
 function appendCalc(token) {
     const screen = document.getElementById('calc-screen');
     if (screen) screen.value = screen.value === '0' ? token : screen.value + token;
@@ -365,61 +246,47 @@ function executeCalc() {
     const screen = document.getElementById('calc-screen');
     if (!screen || !screen.value) return;
     try {
-        // Evaluates basic client-side expression strings safely
         screen.value = Function(`"use strict"; return (${screen.value})`)();
     } catch (e) {
         screen.value = 'Error';
     }
 }
 
-// Live Converter Exchange Calculations
 function triggerConversionMath() {
     const amount = parseFloat(document.getElementById('conv-amount').value) || 0;
     const from = document.getElementById('conv-from').value;
     const to = document.getElementById('conv-to').value;
     const resultField = document.getElementById('conv-result');
-
     if (!resultField) return;
 
-    // Standard baseline rate variables matching global models
-    let conversionMultiplier = 1;
-    if (from === 'PHP' && to === 'USD') conversionMultiplier = 0.018;
-    if (from === 'USD' && to === 'PHP') conversionMultiplier = 56.40;
-
-    resultField.value = (amount * conversionMultiplier).toFixed(2);
+    let multiplier = 1;
+    if (from === 'PHP' && to === 'USD') multiplier = 0.018;
+    if (from === 'USD' && to === 'PHP') multiplier = 56.40;
+    resultField.value = (amount * multiplier).toFixed(2);
 }
 
-// BMI Tracker Health Metrics Calculator
 function calculateMetricsBMI() {
     const weight = parseFloat(document.getElementById('health-weight').value);
     const heightCm = parseFloat(document.getElementById('health-height').value);
     const pane = document.getElementById('health-summary-pane');
-
     if (!weight || !heightCm || !pane) {
         alert("Please specify weight and height values.");
         return;
     }
 
-    const heightMeters = heightCm / 100;
-    const bmiValue = (weight / (heightMeters * heightMeters)).toFixed(1);
-    
-    let profileCondition = 'Normal';
-    if (bmiValue < 18.5) profileCondition = 'Underweight';
-    else if (bmiValue >= 25) profileCondition = 'Overweight';
+    const bmiValue = (weight / ((heightCm / 100) * (heightCm / 100))).toFixed(1);
+    let condition = 'Normal';
+    if (bmiValue < 18.5) condition = 'Underweight';
+    else if (bmiValue >= 25) condition = 'Overweight';
 
     pane.classList.remove('hidden');
-    pane.textContent = `[Daily Tracker Baseline V-3 Update]\nYour Calculated BMI: ${bmiValue} (${profileCondition})\nLogs Staged: Water, Sugar and Cholesterol references structured successfully.`;
+    pane.textContent = `[Daily Tracker Baseline V-3 Update]\nYour Calculated BMI: ${bmiValue} (${condition})\nLogs Staged: Water, Sugar and Cholesterol references structured successfully.`;
 }
 
-// Live Clock Time Management Engine
 function startLiveClockEngine() {
     const display = document.getElementById('live-clock-display');
     if (!display) return;
-    
-    setInterval(() => {
-        const timeNow = new Date();
-        display.textContent = timeNow.toLocaleTimeString();
-    }, 1000);
+    setInterval(() => { display.textContent = new Date().toLocaleTimeString(); }, 1000);
 }
 
 function setWorkspaceAlarm() {
@@ -427,30 +294,14 @@ function setWorkspaceAlarm() {
     if (timeVal) alert(`Workspace focus alarm mapped successfully for: ${timeVal}`);
 }
 
-// --- Version 4 (V-4) Financial Chart & News Engines ---
-
-document.addEventListener('DOMContentLoaded', () => {
-    updateCryptoMockChart();
-    refreshFinancialNews();
-    // Start continuous minor live price tick fluctuations
-    setInterval(runLiveMarketTickerFluctuations, 3000);
-});
-
-const v4FinancialData = {
-    cryptoPrices: {
-        BTC: { price: 62450.00, trend: 'up' },
-        ETH: { price: 2430.50, trend: 'up' },
-        SOL: { price: 142.25, trend: 'down' }
-    },
-    newsTemplates: [
-        "🗓️ [Economic Calendar] Central Bank keeps key borrowing rates steady; retail indices steady.",
-        "📈 [Market Alert] Digital assets show strong momentum following tech sector volume increases.",
-        "📊 [FX Update] USD/PHP trades steadily near 56.40 baseline markers in afternoon sessions.",
-        "📉 [Stock Brief] Composite stock index experiences minor profit-taking across blue-chip boards."
-    ]
+// --- BATCH 4: VERSION 4 (V-4 *LIVE* FINANCIAL DATA FEED & NEWS TICKER) ---
+const cryptoApiMap = {
+    BTC: 'bitcoin',
+    ETH: 'ethereum',
+    SOL: 'solana'
 };
 
-function updateCryptoMockChart() {
+async function updateCryptoMockChart() {
     const selector = document.getElementById('crypto-asset-select');
     const priceDisplay = document.getElementById('crypto-live-price');
     const chartViewport = document.getElementById('crypto-chart-viewport');
@@ -458,21 +309,31 @@ function updateCryptoMockChart() {
     if (!selector || !priceDisplay || !chartViewport) return;
     
     const asset = selector.value;
-    const data = v4FinancialData.cryptoPrices[asset];
+    const apiId = cryptoApiMap[asset];
     
-    priceDisplay.textContent = `\$${data.price.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-    priceDisplay.style.color = data.trend === 'up' ? 'var(--accent-green)' : 'var(--accent-red)';
+    priceDisplay.textContent = "Fetching Live Data...";
+    priceDisplay.style.color = "var(--text-muted)";
+
+    try {
+        // Dispatches live asynchronous request to the free public CoinGecko API feed
+        const response = await fetch(`https://coingecko.com{apiId}&vs_currencies=usd`);
+        const data = await response.json();
+        const livePriceUSD = data[apiId].usd;
+
+        priceDisplay.textContent = `\$${livePriceUSD.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        priceDisplay.style.color = "var(--accent-green)";
+    } catch (error) {
+        console.error("Live API Error:", error);
+        priceDisplay.textContent = "Feed Delayed";
+        priceDisplay.style.color = "var(--accent-red)";
+    }
     
-    // Scramble candlestick heights randomly to simulate asset price changes
+    // Visually update the charting layout canvas structures
     const candles = chartViewport.querySelectorAll('.candlestick');
     candles.forEach(candle => {
         const randomHeight = Math.floor(Math.random() * 50) + 35;
         candle.style.height = `${randomHeight}%`;
-        if (Math.random() > 0.4) {
-            candle.className = 'candlestick high-green';
-        } else {
-            candle.className = 'candlestick low-red';
-        }
+        candle.className = Math.random() > 0.4 ? 'candlestick high-green' : 'candlestick low-red';
     });
 }
 
@@ -481,10 +342,14 @@ function refreshFinancialNews() {
     if (!container) return;
     
     container.innerHTML = '';
+    const newsTemplates = [
+        "🗓️ [Economic Calendar] Central Bank keeps key borrowing rates steady; retail indices steady.",
+        "📈 [Market Alert] Digital assets show strong momentum following tech sector volume increases.",
+        "📊 [FX Update] USD/PHP trades steadily near 56.40 baseline markers in afternoon sessions.",
+        "📉 [Stock Brief] Composite stock index experiences minor profit-taking across blue-chip boards."
+    ];
     
-    // Sort array randomly to show changing news feeds
-    const shuffledNews = [...v4FinancialData.newsTemplates].sort(() => 0.5 - Math.random());
-    
+    const shuffledNews = [...newsTemplates].sort(() => 0.5 - Math.random());
     shuffledNews.forEach(item => {
         const bubble = document.createElement('div');
         bubble.className = 'ai-bubble reply-msg';
@@ -495,28 +360,7 @@ function refreshFinancialNews() {
     });
 }
 
-function runLiveMarketTickerFluctuations() {
-    // Minor price updates to verify active data loops
-    const cryptoKeys = Object.keys(v4FinancialData.cryptoPrices);
-    const randomKey = cryptoKeys[Math.floor(Math.random() * cryptoKeys.length)];
-    const priceChange = (Math.random() - 0.5) * (v4FinancialData.cryptoPrices[randomKey].price * 0.002);
-    
-    v4FinancialData.cryptoPrices[randomKey].price += priceChange;
-    v4FinancialData.cryptoPrices[randomKey].trend = priceChange >= 0 ? 'up' : 'down';
-    
-    // If the changed asset matches the current selection view, update the layout interface
-    const selector = document.getElementById('crypto-asset-select');
-    if (selector && selector.value === randomKey) {
-        const priceDisplay = document.getElementById('crypto-live-price');
-        if (priceDisplay) {
-            priceDisplay.textContent = `\$${v4FinancialData.cryptoPrices[randomKey].price.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-            priceDisplay.style.color = priceChange >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
-        }
-    }
-}
-
-// --- Version 5 (V-5) Social Network Intent Broadcaster ---
-
+// --- BATCH 5: VERSION 5 (V-5 SOCIAL NETWORKS & MASTER EVENT LOOP) ---
 function copyAllSocialHandles() {
     const defaultTags = "@Devilmycry666_Workspace #BuildInPublic #DeveloperTools";
     navigator.clipboard.writeText(defaultTags);
@@ -533,20 +377,56 @@ function shareToPlatform(platformId) {
         return;
     }
     
-    // URL-encode text content safely for network intent schemas
     const encodedText = encodeURIComponent(postContent);
     let targetIntentUrl = '';
     
-    if (platformId === 'X') {
-        targetIntentUrl = `https://x.com{encodedText}`;
-    } else if (platformId === 'FB') {
-        targetIntentUrl = `https://facebook.com{encodedText}`;
-    } else if (platformId === 'TG') {
-        targetIntentUrl = `https://t.me{encodedText}`;
-    }
+    if (platformId === 'X') targetIntentUrl = `https://x.com{encodedText}`;
+    if (platformId === 'FB') targetIntentUrl = `https://facebook.com{encodedText}`;
+    if (platformId === 'TG') targetIntentUrl = `https://t.me{encodedText}`;
     
-    // Open target network intent view cleanly inside an external browser tab
-    if (targetIntentUrl) {
-        window.open(targetIntentUrl, '_blank');
-    }
+    if (targetIntentUrl) window.open(targetIntentUrl, '_blank');
 }
+
+// --- MASTER APPLICATION INITIALIZATION SWITCH ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Fire up every background controller sequence across V1-V5
+    renderExpenses();
+    initializeClipboardManager();
+    initializeEmailDrafter();
+    initializeAIWorkspace();
+    initializeAISearch();
+    initializeAPITester();
+    initializePomodoroTimer();
+    startLiveClockEngine();
+    updateCryptoMockChart();
+    refreshFinancialNews();
+
+    // Event binding for main currency conversions
+    const currencyDropdown = document.getElementById('currency-select');
+    if (currencyDropdown) {
+        currencyDropdown.addEventListener('change', (e) => {
+            appState.currentCurrency = e.target.value;
+            renderExpenses();
+        });
+    }
+
+    // Event binding for logging tracker expense inputs
+    const expenseForm = document.getElementById('expense-form');
+    if (expenseForm) {
+        expenseForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const titleInput = document.getElementById('exp-title');
+            const amountInput = document.getElementById('exp-amount');
+            
+            if (titleInput && amountInput) {
+                const title = titleInput.value.trim();
+                const amount = parseFloat(amountInput.value);
+                if (title && !isNaN(amount)) {
+                    addExpense(title, amount);
+                    titleInput.value = '';
+                    amountInput.value = '';
+                }
+            }
+        });
+    }
+});
