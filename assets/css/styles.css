@@ -1,4 +1,4 @@
-/* --- DEVILMYCRY666 TACTICAL SCI-FI DASHBOARD CONSOLE THEME --- */
+/* --- DEVILMYCRY666 BALANCED SCI-FI DASHBOARD CONSOLE THEME --- */
 :root {
     --bg-dark: #070d14;
     --panel-bg: rgba(13, 27, 42, 0.75);
@@ -19,9 +19,8 @@
 body {
     background-color: var(--bg-dark);
     color: var(--text-main);
-    padding: 1rem;
+    padding: 1.5rem;
     min-height: 100vh;
-    overflow-x: hidden;
 }
 
 /* 📡 Top Global Scrolling Ticker Banner */
@@ -29,8 +28,8 @@ body {
     background: rgba(0, 40, 80, 0.4);
     border: var(--border-glow);
     border-radius: 6px;
-    padding: 0.5rem 1rem;
-    margin-bottom: 1.25rem;
+    padding: 0.6rem 1.25rem;
+    margin-bottom: 1.5rem;
     font-size: 0.75rem;
     display: flex;
     justify-content: space-between;
@@ -40,21 +39,16 @@ body {
     letter-spacing: 1px;
 }
 
-.scrolling-ticker-text {
-    flex: 1;
-    margin-right: 1rem;
-}
-
-/* 🖥️ Consolidated Responsive Grid Layout Workspace */
+/* 🖥️ REPAIRED: Balanced Multi-Column Grid System */
 .workspace-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
+    grid-template-columns: 1fr; /* Single column on mobile viewports */
+    gap: 1.5rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .workspace-grid {
-        grid-template-columns: repeat(2, 1fr); /* Split view matching top layout rows */
+        grid-template-columns: repeat(2, 1fr); /* Enforces exact 2-column distribution on screens */
     }
 }
 
@@ -63,8 +57,10 @@ body {
     background: var(--panel-bg);
     border: var(--border-glow);
     border-radius: 10px;
-    padding: 1.25rem;
-    position: relative;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.05);
 }
 
@@ -73,8 +69,8 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid rgba(0, 240, 255, 0.2);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.25rem;
 }
 
 .card-header h2 {
@@ -89,7 +85,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.4rem 0;
+    padding: 0.5rem 0;
     font-size: 0.8rem;
     border-bottom: 1px dashed rgba(65, 90, 119, 0.3);
 }
@@ -97,20 +93,20 @@ body {
 .sci-fi-tag-green { color: var(--neon-green); font-weight: bold; }
 .sci-fi-tag-blue { color: var(--neon-blue); font-weight: bold; }
 
-/* ⏱️ Pomodoro Circular Layout Indicator Mockup */
+/* ⏱️ Pomodoro Circular Layout Indicator */
 .circular-timer-wrapper {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     border: 3px solid var(--neon-blue);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: var(--neon-blue);
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-    margin: 0 auto;
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+    margin: 0.5rem auto;
 }
 
 /* Interactive Components Overlay Controls */
@@ -119,8 +115,8 @@ input, textarea, select {
     background: #0a1118;
     border: 1px solid var(--neon-muted);
     color: #ffffff;
-    padding: 0.6rem;
-    border-radius: 4px;
+    padding: 0.65rem;
+    border-radius: 6px;
     font-size: 0.85rem;
     margin-bottom: 0.5rem;
 }
@@ -131,13 +127,13 @@ button {
     background: rgba(0, 240, 255, 0.15);
     border: var(--border-glow);
     color: var(--neon-blue);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    padding: 0.55rem 1.2rem;
+    border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 button:hover { background: var(--neon-blue); color: #000; }
 
-/* Hamburger panel alignments */
-.app-header { display: none; } /* Hide old title block for compressed clean look */
-.desktop-dimming-layer { display: none; } /* De-activate modal blocking layer style rules */
+.app-header { display: none; }
+.desktop-dimming-layer { display: none; }
