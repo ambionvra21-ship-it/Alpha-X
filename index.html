@@ -138,6 +138,51 @@
             </div>
         </section>
 
+        
+        <!-- 🧮 PANEL 9: DEVELOPER UTILITY SANDBOX (CALCULATOR, JSON & BASE64 TOOLS) -->
+        <section class="widget-card" id="dev-sandbox-hub" style="border-color: var(--v2-purple);">
+            <div class="card-header">
+                <h2>Utility Sandbox & Math Matrix</h2>
+                <span class="version-badge-display v2-tag-color">V-2 / V-3</span>
+            </div>
+            <div class="card-body" style="display: block; opacity: 1;">
+                <!-- Mini Standalone Developer Calculator Section -->
+                <div style="margin-bottom: 0.75rem;">
+                    <input type="text" id="calc-screen" readonly placeholder="0" style="text-align: right; margin-bottom: 0.4rem; background: #0b0b0d; color: var(--neon-blue); font-weight: bold;">
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.25rem;">
+                        <button onclick="appendCalc('7')" style="padding: 2px 4px; font-size: 0.75rem;">7</button>
+                        <button onclick="appendCalc('8')" style="padding: 2px 4px; font-size: 0.75rem;">8</button>
+                        <button onclick="appendCalc('9')" style="padding: 2px 4px; font-size: 0.75rem;">9</button>
+                        <button onclick="appendCalc('/')" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(99,102,241,0.2);">/</button>
+                        
+                        <button onclick="appendCalc('4')" style="padding: 2px 4px; font-size: 0.75rem;">4</button>
+                        <button onclick="appendCalc('5')" style="padding: 2px 4px; font-size: 0.75rem;">5</button>
+                        <button onclick="appendCalc('6')" style="padding: 2px 4px; font-size: 0.75rem;">6</button>
+                        <button onclick="appendCalc('*')" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(99,102,241,0.2);">*</button>
+                        
+                        <button onclick="appendCalc('1')" style="padding: 2px 4px; font-size: 0.75rem;">1</button>
+                        <button onclick="appendCalc('2')" style="padding: 2px 4px; font-size: 0.75rem;">2</button>
+                        <button onclick="appendCalc('3')" style="padding: 2px 4px; font-size: 0.75rem;">3</button>
+                        <button onclick="appendCalc('-')" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(99,102,241,0.2);">-</button>
+                        
+                        <button onclick="clearCalc()" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(239,68,68,0.2); color: #ef4444;">C</button>
+                        <button onclick="appendCalc('0')" style="padding: 2px 4px; font-size: 0.75rem;">0</button>
+                        <button onclick="executeCalc()" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(34,197,94,0.3); color: var(--neon-green);">=</button>
+                        <button onclick="appendCalc('+')" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(99,102,241,0.2);">+</button>
+                    </div>
+                </div>
+                
+                <!-- JSON Code Viewer & Text Conversion Sandbox Area -->
+                <textarea id="json-input" placeholder="Paste data format or string block variables here..." style="height: 50px; margin-bottom: 0.4rem; font-size: 0.75rem;"></textarea>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.25rem;">
+                    <button id="json-format-btn" style="font-size: 0.65rem; padding: 4px; white-space: nowrap;">JSON Format</button>
+                    <button onclick="runBase64Encode()" style="font-size: 0.65rem; padding: 4px; white-space: nowrap;">B64 Encode</button>
+                    <button onclick="runRegexCheck()" style="font-size: 0.65rem; padding: 4px; white-space: nowrap;">Test Regex</button>
+                </div>
+                <div id="sandbox-output-pane" class="sci-fi-row-item hidden" style="font-size: 0.7rem; color: var(--neon-green); margin-top: 0.4rem; white-space: pre-wrap; background: #090e14; padding: 4px; border-radius: 4px;"></div>
+            </div>
+        </section>
+
         <!-- 🌤️ PANEL 8: SYSTEM PERFORMANCE & WEATHER TELEMETRY -->
         <section class="widget-card" id="daily-vitals-dashboard">
             <div class="card-header">

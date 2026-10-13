@@ -625,3 +625,23 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("✔ Biometric calculator engine and time channels re-anchored successfully!");
     }, 1000);
 });
+
+// --- BATCH 15: RE-INJECTED SANDBOX UTILITIES INTERACTION ROUTINES ---
+document.addEventListener("DOMContentLoaded", () => {
+    const jsonFormatButton = document.getElementById("json-format-btn");
+    const jsonInputField = document.getElementById("json-input");
+    
+    if (jsonFormatButton && jsonInputField) {
+        jsonFormatButton.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const rawString = jsonInputField.value.trim();
+            if (!rawString) return;
+            try {
+                // Parse and format the raw input text with neat indentations
+                jsonInputField.value = JSON.stringify(JSON.parse(rawString), null, 4);
+            } catch (err) {
+                alert("Invalid JSON data layout format string: " + err.message);
+            }
+        });
+    }
+});
