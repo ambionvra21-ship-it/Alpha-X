@@ -3,197 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Devilmycry666 OS Workspace</title>
+    <title>Devilmycry666 OS Terminal</title>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="https://cloudflare.com">
 </head>
 <body>
 
-    <!-- 📡 Top Global Rolling Ticker Banner -->
+    <!-- 📡 Top Global News Marquee Ticker Banner -->
     <div class="global-ticker-banner">
         <div class="scrolling-ticker-text">
-            GLOBAL MARKETS | NASDAQ: +1.2% | BTC: +3.5% | INFLATION TRENDS (CORE): +0.1% | SYSTEM STATUS: OPTIMAL
+            [LIVE] G-7 PROTOCOLS ACTIVE • NASDAQ FEED: +1.4% • INFLATION DATA SYNCING • [ALERT] BTC: +3.2% • SYSTEM OPTIMAL...
         </div>
-        <div class="version-badge">UP NEXT: Pomodoro</div>
+        <div class="version-badge">Devilmycry666 OS</div>
     </div>
 
-    <!-- 🖥️ Core Dashboard Grid Workspace Container -->
+    <!-- 🖥 *START* OF MASTER TERMINAL LAYOUT GRID WORKSPACE -->
     <main class="workspace-grid">
 
-        <!-- 📊 PANEL 1: MARKET OVERVIEW (CONSOLIDATED EXPENSES) -->
-        <section class="widget-card" id="expense-tracker">
+        <!-- CARD 1: EXTENSIVE MARKET OVERVIEW HUB (FULL ROW SPAN) -->
+        <section class="widget-card full-span-row" id="expense-tracker">
             <div class="card-header">
-                <h2>Market Overview (Expense Data Selected)</h2>
-                <span class="sci-fi-tag-blue">Market Insights</span>
+                <h2>MARKET OVERVIEW (EXPENSE DATA SELECTED)</h2>
+                <span class="version-badge-display v1-tag-color">Market Insights</span>
             </div>
-            <div class="card-body" style="display: block; opacity: 1;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem;">
-                    <div>
-                        <span style="font-size: 0.65rem; color: var(--neon-muted); display: block;">TOTAL EXPENSES</span>
-                        <div id="tracker-aggregate-total" style="font-size: 1.25rem; font-weight: bold; color: var(--neon-green);">₱0.00</div>
+            <div class="card-body terminal-split-grid">
+                <!-- Left Column: Visual Data Graphs -->
+                <div class="graph-panel-column">
+                    <div class="mini-chart-container">
+                        <div class="chart-label-row"><span>ASSET BALANCES</span><strong class="text-blue">₱12,450.00</strong></div>
+                        <div class="sparkline-svg-mock">
+                            <div class="mock-bar" style="height: 40%"></div>
+                            <div class="mock-bar" style="height: 65%"></div>
+                            <div class="mock-bar" style="height: 50%"></div>
+                            <div class="mock-bar" style="height: 85%"></div>
+                            <div class="mock-bar" style="height: 70%"></div>
+                        </div>
                     </div>
-                    <div>
-                        <span style="font-size: 0.65rem; color: var(--neon-muted); display: block;">LOGGED UTILITIES</span>
-                        <div id="tracker-items-count" style="font-size: 1.25rem; font-weight: bold; color: var(--neon-blue);">0 Items</div>
+                    <div class="summary-table-list">
+                        <div class="sci-fi-row-item"><span>ASSET BALANCE</span><span id="tracker-aggregate-total" class="text-green">₱0.00</span></div>
+                        <div class="sci-fi-row-item"><span>ITEM COUNTER</span><span id="tracker-items-count" class="text-blue">0 Items</span></div>
                     </div>
                 </div>
-                
-                <form id="expense-form" onsubmit="event.preventDefault();" style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
-                    <input type="text" id="exp-title" placeholder="Description" required style="margin-bottom:0;">
-                    <input type="number" id="exp-amount" placeholder="Amount" required style="margin-bottom:0;">
-                    <button type="submit">ADD</button>
-                </form>
-                <ul id="expense-list" style="list-style: none; max-height: 80px; overflow-y: auto;"></ul>
+                <!-- Right Column: Interactive Registry Inputs -->
+                <div class="form-panel-column">
+                    <form id="expense-form" onsubmit="event.preventDefault();">
+                        <input type="text" id="exp-title" placeholder="FIRM NAME / ENTRY" required>
+                        <input type="number" id="exp-amount" placeholder="ENTRY VALUE" required>
+                        <button type="submit" class="w-100">SUBMIT ENTRY</button>
+                    </form>
+                    <ul id="expense-list" class="scrollable-terminal-list"></ul>
+                </div>
             </div>
         </section>
 
-        <!-- 💬 PANEL 2: COMMUNICATIONS HUB (SMART EMAIL & AI SPACE) -->
+        <!-- CARD 2: COMMUNICATIONS & AI PROMPT HUB -->
         <section class="widget-card" id="email-drafter">
             <div class="card-header">
-                <h2>Communications Hub (Smart Email, Social, AI)</h2>
+                <h2>COMMUNICATIONS HUB</h2>
+                <span class="version-badge-display v2-tag-color">AI Matrix</span>
             </div>
-            <div class="card-body" style="display: block; opacity: 1;">
-                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
-                    <select id="email-tone" style="margin-bottom:0; flex: 1;">
-                        <option value="formal">Formal</option>
-                        <option value="casual">Casual</option>
-                    </select>
-                    <button class="btn-primary" style="white-space: nowrap;">GENERATE</button>
+            <div class="card-body">
+                <div class="mini-chart-container" style="height: 55px; margin-bottom: 0.5rem;">
+                    <div class="chart-label-row" style="font-size:0.7rem;"><span>LIVE CHART CHARTS</span></div>
+                    <div class="sparkline-svg-mock" style="gap:2px;">
+                        <div class="mock-bar bg-teal" style="height: 30%"></div>
+                        <div class="mock-bar bg-teal" style="height: 45%"></div>
+                        <div class="mock-bar bg-teal" style="height: 75%"></div>
+                        <div class="mock-bar bg-teal" style="height: 60%"></div>
+                    </div>
                 </div>
-                <textarea id="email-context" placeholder="Ask DMC or input prompt content logs..." style="height: 65px; margin-bottom: 0;"></textarea>
+                <div class="ai-prompt-area">
+                    <textarea id="email-context" placeholder="AI PROMPT AREA: Ask DMC or input prompt content logs..."></textarea>
+                    <div class="filter-controls-row">
+                        <select id="email-tone" style="margin-bottom:0; padding:4px; font-size:0.75rem; width:auto;">
+                            <option value="formal">Formal</option>
+                            <option value="casual">Casual</option>
+                        </select>
+                        <button class="btn-primary" style="padding: 4px 10px; font-size:0.75rem;">GENERATE</button>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- ₿ PANEL 3: CRYPTO MATRIX (LIVE CRYPTO STREAMS) -->
+        <!-- CARD 3: CRYPTO MATRIX PORTFOLIO -->
         <section class="widget-card" id="crypto-matrix-hub">
             <div class="card-header">
-                <h2>Crypto Matrix (Portfolio Active)</h2>
-                <select id="crypto-asset-select" style="width: auto; margin-bottom: 0; padding: 2px 6px; font-size: 0.75rem;">
+                <h2>CRYPTO MATRIX PORTFOLIO</h2>
+                <select id="crypto-asset-select" class="compact-select">
                     <option value="BTC">BTC / USD</option>
                     <option value="ETH">ETH / USD</option>
                     <option value="SOL">SOL / USD</option>
                 </select>
             </div>
-            <div class="card-body" style="display: block; opacity: 1;">
-                <div class="sci-fi-row-item">
-                    <span>Selected Index Feed Price:</span>
-                    <span id="crypto-live-price" class="sci-fi-tag-green">Loading Stream...</span>
+            <div class="card-body">
+                <div class="crypto-ticker-strip">
+                    <div class="ticker-row"><span><i class="fa-brands fa-bitcoin text-amber"></i> BTC:</span><strong class="text-green" id="crypto-btc-val">$57,230.50</strong></div>
+                    <div class="ticker-row"><span><i class="fa-brands fa-ethereum text-indigo"></i> ETH:</span><strong class="text-blue" id="crypto-eth-val">$2,410.20</strong></div>
+                    <div class="ticker-row"><span><i class="fa-solid fa-bolt text-pink"></i> SOL:</span><strong id="crypto-sol-val">$141.75</strong></div>
                 </div>
-                <div class="sci-fi-row-item"><span>Network Variance:</span><span class="sci-fi-tag-blue">+10.32%</span></div>
+                <div class="sci-fi-row-item mt-2">
+                    <span>SELECTED FEED INDEX:</span>
+                    <span id="crypto-live-price" class="text-green">FETCHING...</span>
+                </div>
             </div>
         </section>
 
-        <!-- 📈 PANEL 4: STOCK MONITOR (ANALYTICS ACTIVE) -->
+        <!-- CARD 4: STOCK MONITOR & ANALYTICS -->
         <section class="widget-card" id="stock-monitor-hub">
             <div class="card-header">
-                <h2>Stock Monitor (Analytics Active)</h2>
+                <h2>STOCK MONITOR & ANALYTICS</h2>
+                <span class="version-badge-display v4-tag-color">Live FX</span>
             </div>
-            <div class="card-body" style="display: block; opacity: 1;">
-                <div class="sci-fi-row-item"><span>PSEi Index (PH)</span><span class="sci-fi-tag-green">7,240.50 (+1.2%)</span></div>
-                <div class="sci-fi-row-item"><span>SPY Ticker (S&P 500)</span><span style="color: #ff4136;">5,710.25 (-0.4%)</span></div>
+            <div class="card-body">
+                <div class="sci-fi-row-item"><span>PSEi INDEX (PH)</span><span id="stock-psei" class="text-green">7,240.50 (+1.2%)</span></div>
+                <div class="sci-fi-row-item"><span>S&P 500 TICKER</span><span id="stock-spy" style="color: #ff4136;">5,710.25 (-0.4%)</span></div>
+                <div style="margin-top: 0.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.75rem;">
+                    <div class="nested-data-box"><span>USD/PHP</span><strong class="text-blue">56.42</strong></div>
+                    <div class="nested-data-box"><span>EUR/PHP</span><strong class="text-blue">61.28</strong></div>
+                </div>
             </div>
         </section>
 
-        <!-- ⏱️ PANEL 5: POMODORO TIMER -->
+        <!-- CARD 5: POMODORO TIMER CORNER -->
         <section class="widget-card" id="pomodoro-timer">
             <div class="card-header">
-                <h2>Pomodoro Timer</h2>
+                <h2>POMODORO TIMER</h2>
             </div>
-            <div class="card-body" style="display: block; opacity: 1; text-align: center;">
+            <div class="card-body text-center">
                 <div class="circular-timer-wrapper" id="pomodoro-display">25:00</div>
-                <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem;">
-                    <button id="pomodoro-start" style="padding: 2px 8px; font-size: 0.75rem;">START</button>
-                    <button id="pomodoro-pause" style="padding: 2px 8px; font-size: 0.75rem;">PAUSE</button>
+                <div class="timer-btn-row" style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem;">
+                    <button id="pomodoro-start">START</button>
+                    <button id="pomodoro-pause">PAUSE</button>
                 </div>
             </div>
         </section>
 
-        <!-- 🌐 PANEL 6: SOCIAL GRID -->
+        <!-- CARD 6: COMPACT SOCIAL GRID ACTIVE -->
         <section class="widget-card" id="social-media-channels">
             <div class="card-header">
-                <h2>Social Grid (Grid Active)</h2>
+                <h2>SOCIAL GRID ACTIVE</h2>
+                <span class="version-badge-display v5-tag-color">Broadcast</span>
             </div>
-            <div class="card-body" style="display: block; opacity: 1;">
-                <textarea id="social-share-text" placeholder="Draft share payload text message updates..." style="height: 45px; margin-bottom: 0.5rem;"></textarea>
-                <div style="display: flex; gap: 0.4rem;">
-                    <button onclick="shareToPlatform('X')" style="padding: 4px 8px; font-size: 0.75rem; flex: 1;">SHARE TO X</button>
-                    <button onclick="shareToPlatform('TG')" style="padding: 4px 8px; font-size: 0.75rem; flex: 1;">PING TG</button>
+            <div class="card-body">
+                <div class="social-chip-row">
+                    <span class="brand-chip bg-fb"><i class="fa-brands fa-facebook"></i> Facebook</span>
+                    <span class="brand-chip bg-x"><i class="fa-brands fa-x-twitter"></i> X</span>
                 </div>
+                <textarea id="social-share-text" placeholder="Draft share payload text updates..." style="height: 45px; margin-top:0.4rem;"></textarea>
+                <button onclick="shareToPlatform('X')" class="w-100" style="padding:4px; font-size:0.75rem;">BROADCAST UPDATE</button>
             </div>
         </section>
 
-        <!-- 🏥 PANEL 7: VITAL & BMI HEALTH TRACKER -->
+        <!-- CARD 7: VITAL SIGNS & BMI COUNTER -->
         <section class="widget-card" id="vital-health-tracker">
             <div class="card-header">
-                <h2>Vital & BMI (Sync Active)</h2>
-                <span id="live-clock-display" class="sci-fi-tag-blue">00:00:00 AM</span>
+                <h2>VITAL & BMI SYNC ACTIVE</h2>
+                <span id="live-clock-display" class="text-blue">00:00:00 AM</span>
             </div>
-            <div class="card-body" style="display: block; opacity: 1;">
-                <div style="display: flex; gap: 0.25rem; margin-bottom: 0.5rem;">
-                    <input type="number" id="health-weight" placeholder="W (kg)" style="margin-bottom:0;">
-                    <input type="number" id="health-height" placeholder="H (cm)" style="margin-bottom:0;">
-                    <button onclick="calculateMetricsBMI()" style="padding: 2px 6px; font-size: 0.7rem;">CALC</button>
+            <div class="card-body">
+                <div style="display: flex; gap: 0.25rem;">
+                    <input type="number" id="health-weight" placeholder="Weight (kg)" style="margin-bottom:0;">
+                    <input type="number" id="health-height" placeholder="Height (cm)" style="margin-bottom:0;">
+                    <button onclick="calculateMetricsBMI()" style="padding: 2px 8px;">CALC</button>
                 </div>
-                <div id="health-summary-pane" class="sci-fi-row-item" style="font-size:0.75rem; color: var(--neon-blue);">Enter inputs to query profile metrics...</div>
+                <div id="health-summary-pane" class="nested-data-box mt-2" style="font-size: 0.75rem; min-height: 35px;">System Tracking Node Active</div>
             </div>
         </section>
 
-        
-        <!-- 🧮 PANEL 9: DEVELOPER UTILITY SANDBOX (CALCULATOR, JSON & BASE64 TOOLS) -->
-        <section class="widget-card" id="dev-sandbox-hub" style="border-color: var(--v2-purple);">
-            <div class="card-header">
-                <h2>Utility Sandbox & Math Matrix</h2>
-                <span class="version-badge-display v2-tag-color">V-2 / V-3</span>
-            </div>
-            <div class="card-body" style="display: block; opacity: 1;">
-                <!-- Mini Standalone Developer Calculator Section -->
-                <div style="margin-bottom: 0.75rem;">
-                    <input type="text" id="calc-screen" readonly placeholder="0" style="text-align: right; margin-bottom: 0.4rem; background: #0b0b0d; color: var(--neon-blue); font-weight: bold;">
-                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.25rem;">
-                        <button onclick="appendCalc('7')" style="padding: 2px 4px; font-size: 0.75rem;">7</button>
-                        <button onclick="appendCalc('8')" style="padding: 2px 4px; font-size: 0.75rem;">8</button>
-                        <button onclick="appendCalc('9')" style="padding: 2px 4px; font-size: 0.75rem;">9</button>
-                        <button onclick="appendCalc('/')" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(99,102,241,0.2);">/</button>
-                        
-                        <button onclick="appendCalc('4')" style="padding: 2px 4px; font-size: 0.75rem;">4</button>
-                        <button onclick="appendCalc('5')" style="padding: 2px 4px; font-size: 0.75rem;">5</button>
-                        <button onclick="appendCalc('6')" style="padding: 2px 4px; font-size: 0.75rem;">6</button>
-                        <button onclick="appendCalc('*')" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(99,102,241,0.2);">*</button>
-                        
-                        <button onclick="appendCalc('1')" style="padding: 2px 4px; font-size: 0.75rem;">1</button>
-                        <button onclick="appendCalc('2')" style="padding: 2px 4px; font-size: 0.75rem;">2</button>
-                        <button onclick="appendCalc('3')" style="padding: 2px 4px; font-size: 0.75rem;">3</button>
-                        <button onclick="appendCalc('-')" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(99,102,241,0.2);">-</button>
-                        
-                        <button onclick="clearCalc()" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(239,68,68,0.2); color: #ef4444;">C</button>
-                        <button onclick="appendCalc('0')" style="padding: 2px 4px; font-size: 0.75rem;">0</button>
-                        <button onclick="executeCalc()" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(34,197,94,0.3); color: var(--neon-green);">=</button>
-                        <button onclick="appendCalc('+')" style="padding: 2px 4px; font-size: 0.75rem; background: rgba(99,102,241,0.2);">+</button>
-                    </div>
-                </div>
-                
-                <!-- JSON Code Viewer & Text Conversion Sandbox Area -->
-                <textarea id="json-input" placeholder="Paste data format or string block variables here..." style="height: 50px; margin-bottom: 0.4rem; font-size: 0.75rem;"></textarea>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.25rem;">
-                    <button id="json-format-btn" style="font-size: 0.65rem; padding: 4px; white-space: nowrap;">JSON Format</button>
-                    <button onclick="runBase64Encode()" style="font-size: 0.65rem; padding: 4px; white-space: nowrap;">B64 Encode</button>
-                    <button onclick="runRegexCheck()" style="font-size: 0.65rem; padding: 4px; white-space: nowrap;">Test Regex</button>
-                </div>
-                <div id="sandbox-output-pane" class="sci-fi-row-item hidden" style="font-size: 0.7rem; color: var(--neon-green); margin-top: 0.4rem; white-space: pre-wrap; background: #090e14; padding: 4px; border-radius: 4px;"></div>
-            </div>
-        </section>
-
-        <!-- 🌤️ PANEL 8: SYSTEM PERFORMANCE & WEATHER TELEMETRY -->
+        <!-- CARD 8: TELEMETRY & NETWORK PERFORMANCE -->
         <section class="widget-card" id="daily-vitals-dashboard">
             <div class="card-header">
-                <h2>System Analytics & Environment</h2>
+                <h2>SYSTEM ANALYTICS & ENVIRONMENT</h2>
             </div>
-            <div class="card-body" style="display: block; opacity: 1;">
+            <div class="card-body">
                 <div class="sci-fi-row-item">
-                    <span>Atmospheric Telemetry:</span>
-                    <span class="v3-badge sci-fi-tag-green">San Pablo City • Syncing...</span>
+                    <span>Weather Status:</span>
+                    <span class="v3-badge text-green">San Pablo City • Syncing...</span>
                 </div>
-                <div class="sci-fi-row-item"><span>CPU Core Load Status:</span><span class="sci-fi-tag-blue">87% Active</span></div>
+                <div class="network-hardware-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;">
+                    <div>
+                        <span class="label-tiny">CPU LOAD</span>
+                        <div class="progress-bar-rail"><div class="progress-fill-bar" style="width: 87%"></div></div>
+                    </div>
+                    <div>
+                        <span class="label-tiny">NETWORK</span>
+                        <div class="progress-bar-rail"><div class="progress-fill-bar bg-blue" style="width: 65%"></div></div>
+                    </div>
+                </div>
             </div>
         </section>
 
