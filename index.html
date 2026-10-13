@@ -3,494 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Devilmycry666 - V-1 Workspace</title>
-    <!-- CSS Stylesheet link -->
+    <title>Devilmycry666 OS Workspace</title>
     <link rel="stylesheet" href="assets/css/styles.css">
-    <!-- Font Awesome for clean tool UI iconography -->
     <link rel="stylesheet" href="https://cloudflare.com">
 </head>
 <body>
 
-    <header class="app-header">
-        <button id="sidebar-toggle-btn" class="hamburger-menu-btn" title="Open Navigation Menu">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <h1><i class="fa-solid fa-terminal"></i> DEVILMYCRY666 <span class="version-tag">V-1</span></h1>
-        <p class="subtitle">Mobile-Optimized Multi-Utility Control Panel</p>
-    </header>
-
-    
-    <!-- Desktop Sliding Side Menu System -->
-    <nav id="desktop-sidebar-pane" class="side-navigation-panel">
-        <div class="sidebar-header-row">
-            <h3><i class="fa-solid fa-layer-group"></i> Navigation</h3>
-            <button id="sidebar-close-btn" class="sidebar-close-action"><i class="fa-solid fa-xmark"></i></button>
+    <!-- 📡 Top Global Rolling Ticker Banner -->
+    <div class="global-ticker-banner">
+        <div class="scrolling-ticker-text">
+            GLOBAL MARKETS | NASDAQ: +1.2% | BTC: +3.5% | INFLATION TRENDS (CORE): +0.1% | SYSTEM STATUS: OPTIMAL
         </div>
-        <ul class="sidebar-nav-links">
-            <li onclick="focusWidgetWindow('expense-tracker')"><i class="fa-solid fa-wallet"></i> Expense Tracker</li>
-            <li onclick="focusWidgetWindow('clipboard-manager')"><i class="fa-solid fa-clipboard"></i> Quick Snippets</li>
-            <li onclick="focusWidgetWindow('sound-machine')"><i class="fa-solid fa-sliders"></i> Ambient Sound Machine</li>
-            <li onclick="focusWidgetWindow('email-drafter')"><i class="fa-solid fa-envelope-open-text"></i> Email Drafter</li>
-            <li onclick="focusWidgetWindow('invoice-generator')"><i class="fa-solid fa-file-invoice-dollar"></i> Invoice Generator</li>
-            <li onclick="focusWidgetWindow('social-media-channels')"><i class="fa-solid fa-share-nodes"></i> Social Network</li>
-            <li onclick="focusWidgetWindow('crypto-exchange-board')"><i class="fa-brands fa-bitcoin"></i> Crypto Chart Matrix</li>
-            <li onclick="focusWidgetWindow('ai-workspace')"><i class="fa-solid fa-brain"></i> AI Workspace</li>
-        </ul>
-        <div class="sidebar-footer-info">
-            <span class="v5-badge">DEVILMYCRY666 OS</span>
-        </div>
-    </nav>
-    <div id="sidebar-overlay-backdrop" class="sidebar-backdrop-dim"></div>
+        <div class="version-badge">UP NEXT: Pomodoro</div>
+    </div>
 
+    <!-- 🖥️ Core Dashboard Grid Workspace Container -->
     <main class="workspace-grid">
-        
-        <!-- MODULE 1: EXPENSE TRACKER & BUDGET CHARTS -->
+
+        <!-- 📊 PANEL 1: MARKET OVERVIEW (CONSOLIDATED EXPENSES) -->
         <section class="widget-card" id="expense-tracker">
             <div class="card-header">
-                <h2><i class="fa-solid fa-wallet"></i> Expense Tracker</h2>
-                <div class="currency-selector">
-                    <select id="currency-select">
-                        <option value="PHP">₱ PHP</option>
-                        <option value="USD">$ USD</option>
-                        <option value="EUR">€ EUR</option>
-                    </select>
-                </div>
+                <h2>Market Overview (Expense Data Selected)</h2>
+                <span class="sci-fi-tag-blue">Market Insights</span>
             </div>
-            <div class="card-body">
-                <!-- Live Financial Metrics Grid Summary View -->
-                <div class="tracker-metrics-summary-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.25rem;">
-                    <div style="background: #111114; border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 4px; border-left: 3px solid var(--accent-green);">
-                        <span style="font-size: 0.7rem; color: var(--text-muted); display: block; text-transform: uppercase;">Total Expenses</span>
-                        <div id="tracker-aggregate-total" style="font-size: 1.35rem; font-weight: bold; color: var(--accent-green); margin-top: 0.25rem;">₱0.00</div>
+            <div class="card-body" style="display: block; opacity: 1;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem;">
+                    <div>
+                        <span style="font-size: 0.65rem; color: var(--neon-muted); display: block;">TOTAL EXPENSES</span>
+                        <div id="tracker-aggregate-total" style="font-size: 1.25rem; font-weight: bold; color: var(--neon-green);">₱0.00</div>
                     </div>
-                    <div style="background: #111114; border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 4px; border-left: 3px solid var(--accent-blue);">
-                        <span style="font-size: 0.7rem; color: var(--text-muted); display: block; text-transform: uppercase;">Logged Items</span>
-                        <div id="tracker-items-count" style="font-size: 1.35rem; font-weight: bold; color: var(--accent-blue); margin-top: 0.25rem;">0 Items</div>
+                    <div>
+                        <span style="font-size: 0.65rem; color: var(--neon-muted); display: block;">LOGGED UTILITIES</span>
+                        <div id="tracker-items-count" style="font-size: 1.25rem; font-weight: bold; color: var(--neon-blue);">0 Items</div>
                     </div>
                 </div>
                 
-                <form id="expense-form" onsubmit="event.preventDefault();">
-                    <input type="text" id="exp-title" placeholder="Item description" required>
-                    <input type="number" id="exp-amount" placeholder="Amount" step="0.01" required>
-                    <button type="submit" class="btn-primary"><i class="fa-solid fa-plus"></i> Add</button>
+                <form id="expense-form" onsubmit="event.preventDefault();" style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <input type="text" id="exp-title" placeholder="Description" required style="margin-bottom:0;">
+                    <input type="number" id="exp-amount" placeholder="Amount" required style="margin-bottom:0;">
+                    <button type="submit">ADD</button>
                 </form>
-                <div class="list-container">
-                    <ul id="expense-list" class="utility-list">
-                        <!-- Simulated template entry showing edit/delete layout actions -->
-                        <li class="list-item">
-                            <span>Sample Log</span>
-                            <span class="amount-tag">₱150.00</span>
-                            <div class="action-buttons">
-                                <button class="btn-icon edit-btn" title="Edit"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn-icon delete-btn" title="Delete"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <ul id="expense-list" style="list-style: none; max-height: 80px; overflow-y: auto;"></ul>
             </div>
         </section>
 
-        <!-- MODULE 2: QUICK SNIPPETS & CLIPBOARD MANAGER -->
-        <section class="widget-card" id="clipboard-manager">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-clipboard"></i> Quick Snippets</h2>
-            </div>
-            <div class="card-body">
-                <div class="quick-tags">
-                    <button class="tag-btn" onclick="navigator.clipboard.writeText('Hello World!');">Code Boilerplate</button>
-                    <button class="tag-btn" onclick="navigator.clipboard.writeText('Best regards,\nUser');">Sign-off Template</button>
-                </div>
-                <textarea id="snippet-input" placeholder="Paste custom items to hold in temporary workspace..."></textarea>
-                <button class="btn-secondary w-100"><i class="fa-solid fa-bookmark"></i> Hold Snippet</button>
-            </div>
-        </section>
-
-        <!-- MODULE 3: AMBIENT BACKGROUND SOUND MACHINE -->
-        <section class="widget-card" id="sound-machine">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-sliders"></i> Ambient Sound Machine</h2>
-            </div>
-            <div class="card-body">
-                <div class="audio-control-row">
-                    <span><i class="fa-solid fa-cloud-rain"></i> Rainfall</span>
-                    <button class="toggle-switch-btn" onclick="this.classList.toggle('active')">OFF</button>
-                </div>
-                <div class="audio-control-row">
-                    <span><i class="fa-solid fa-wind"></i> White Noise</span>
-                    <button class="toggle-switch-btn" onclick="this.classList.toggle('active')">OFF</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- MODULE 4: SMART EMAIL & REPLY DRAFTER -->
+        <!-- 💬 PANEL 2: COMMUNICATIONS HUB (SMART EMAIL & AI SPACE) -->
         <section class="widget-card" id="email-drafter">
             <div class="card-header">
-                <h2><i class="fa-solid fa-envelope-open-text"></i> Smart Email Drafter</h2>
+                <h2>Communications Hub (Smart Email, Social, AI)</h2>
             </div>
-            <div class="card-body">
-                <select id="email-tone" class="mb-2">
-                    <option value="formal">Formal Professional</option>
-                    <option value="casual">Casual Friendly</option>
-                    <option value="urgent">Urgent Response</option>
+            <div class="card-body" style="display: block; opacity: 1;">
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <select id="email-tone" style="margin-bottom:0; flex: 1;">
+                        <option value="formal">Formal</option>
+                        <option value="casual">Casual</option>
+                    </select>
+                    <button class="btn-primary" style="white-space: nowrap;">GENERATE</button>
+                </div>
+                <textarea id="email-context" placeholder="Ask DMC or input prompt content logs..." style="height: 65px; margin-bottom: 0;"></textarea>
+            </div>
+        </section>
+
+        <!-- ₿ PANEL 3: CRYPTO MATRIX (LIVE CRYPTO STREAMS) -->
+        <section class="widget-card" id="crypto-matrix-hub">
+            <div class="card-header">
+                <h2>Crypto Matrix (Portfolio Active)</h2>
+                <select id="crypto-asset-select" style="width: auto; margin-bottom: 0; padding: 2px 6px; font-size: 0.75rem;">
+                    <option value="BTC">BTC / USD</option>
+                    <option value="ETH">ETH / USD</option>
+                    <option value="SOL">SOL / USD</option>
                 </select>
-                <textarea id="email-context" placeholder="Core details or prompt bullet points..."></textarea>
-                <button class="btn-primary w-100"><i class="fa-solid fa-wand-magic-sparkles"></i> Build Reply Structure</button>
+            </div>
+            <div class="card-body" style="display: block; opacity: 1;">
+                <div class="sci-fi-row-item">
+                    <span>Selected Index Feed Price:</span>
+                    <span id="crypto-live-price" class="sci-fi-tag-green">Loading Stream...</span>
+                </div>
+                <div class="sci-fi-row-item"><span>Network Variance:</span><span class="sci-fi-tag-blue">+10.32%</span></div>
             </div>
         </section>
 
-        <!-- MODULE 5: INVOICE & QUOTE GENERATOR (WITH DOCUMENT LABELS) -->
-        <section class="widget-card" id="invoice-generator">
+        <!-- 📈 PANEL 4: STOCK MONITOR (ANALYTICS ACTIVE) -->
+        <section class="widget-card" id="stock-monitor-hub">
             <div class="card-header">
-                <h2><i class="fa-solid fa-file-invoice-dollar"></i> Invoice & Quote Generator</h2>
+                <h2>Stock Monitor (Analytics Active)</h2>
             </div>
-            <div class="card-body">
-                <input type="text" placeholder="Client Name" class="mb-2">
-                <input type="number" placeholder="Total Quoted Bill" class="mb-2">
-                <div class="export-options-grid">
-                    <button class="export-btn pdf"><i class="fa-solid fa-file-pdf"></i> PDF</button>
-                    <button class="export-btn word"><i class="fa-solid fa-file-word"></i> Word</button>
-                    <button class="export-btn excel"><i class="fa-solid fa-file-excel"></i> Excel</button>
-                </div>
+            <div class="card-body" style="display: block; opacity: 1;">
+                <div class="sci-fi-row-item"><span>PSEi Index (PH)</span><span class="sci-fi-tag-green">7,240.50 (+1.2%)</span></div>
+                <div class="sci-fi-row-item"><span>SPY Ticker (S&P 500)</span><span style="color: #ff4136;">5,710.25 (-0.4%)</span></div>
             </div>
         </section>
 
-    
-        
-        
-        
-        <!-- ==================== VERSION 5 (V-5) MODULES ==================== -->
-        <!-- MODULE 20: SOCIAL MEDIA LINKS & PANEL CONTROLLERS -->
-        <section class="widget-card v5-card" id="social-media-channels">
+        <!-- ⏱️ PANEL 5: POMODORO TIMER -->
+        <section class="widget-card" id="pomodoro-timer">
             <div class="card-header">
-                <h2><i class="fa-solid fa-share-nodes"></i> Social Network Grid</h2>
-                <span class="v5-badge">V-5</span>
+                <h2>Pomodoro Timer</h2>
             </div>
-            <div class="card-body">
-                <!-- Anchor Link Framework Matrix -->
-                <div class="sandbox-tools-grid mb-2">
-                    <a href="https://facebook.com" target="_blank" class="social-link-btn fb-theme"><i class="fa-brands fa-facebook"></i> Facebook</a>
-                    <a href="https://x.com" target="_blank" class="social-link-btn x-theme"><i class="fa-brands fa-x-twitter"></i> X / Twitter</a>
-                    <a href="https://instagram.com" target="_blank" class="social-link-btn ig-theme"><i class="fa-brands fa-instagram"></i> Instagram</a>
-                </div>
-                <div class="sandbox-tools-grid mb-2">
-                    <a href="https://t.me" target="_blank" class="social-link-btn tg-theme"><i class="fa-brands fa-telegram"></i> Telegram</a>
-                    <a href="https://discord.com" target="_blank" class="social-link-btn dc-theme"><i class="fa-brands fa-discord"></i> Discord</a>
-                    <button onclick="copyAllSocialHandles()" class="tool-btn"><i class="fa-solid fa-copy"></i> Copy Tags</button>
-                </div>
-                
-                <!-- Cross-Platform Text Sharing Broadcaster Layout -->
-                <div class="broadcast-box mt-2">
-                    <label class="small-label">Draft Network Share Text:</label>
-                    <textarea id="social-share-text" placeholder="Type a post update to broadcast across your platform links..."></textarea>
-                    <div class="export-options-grid">
-                        <button onclick="shareToPlatform('X')" class="btn-secondary"><i class="fa-brands fa-x-twitter"></i> Share to X</button>
-                        <button onclick="shareToPlatform('FB')" class="btn-primary"><i class="fa-brands fa-facebook-f"></i> Post to FB</button>
-                        <button onclick="shareToPlatform('TG')" class="btn-secondary tg-theme-btn"><i class="fa-brands fa-telegram"></i> Ping TG</button>
-                    </div>
+            <div class="card-body" style="display: block; opacity: 1; text-align: center;">
+                <div class="circular-timer-wrapper" id="pomodoro-display">25:00</div>
+                <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem;">
+                    <button id="pomodoro-start" style="padding: 2px 8px; font-size: 0.75rem;">START</button>
+                    <button id="pomodoro-pause" style="padding: 2px 8px; font-size: 0.75rem;">PAUSE</button>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== VERSION 4 (V-4) MODULES ==================== -->
-        <!-- MODULE 16: CRYPTO LIVE EXCHANGE LAYOUT CHARTS -->
-        <section class="widget-card v4-card" id="crypto-exchange-board">
+        <!-- 🌐 PANEL 6: SOCIAL GRID -->
+        <section class="widget-card" id="social-media-channels">
             <div class="card-header">
-                <h2><i class="fa-brands fa-bitcoin"></i> Crypto Chart Matrix</h2>
-                <span class="v4-badge">V-4</span>
+                <h2>Social Grid (Grid Active)</h2>
             </div>
-            <div class="card-body">
-                <div class="input-mix-row mb-2">
-                    <select id="crypto-asset-select" onchange="updateCryptoMockChart()">
-                        <option value="BTC" selected>BTC / USD</option>
-                        <option value="ETH">ETH / USD</option>
-                        <option value="SOL">SOL / USD</option>
-                    </select>
-                    <span id="crypto-live-price" class="amount-tag">Loading...</span>
-                </div>
-                <!-- Interactive grid mimicking standard candlestick charts -->
-                <div class="chart-canvas-mock" id="crypto-chart-viewport">
-                    <div class="candlestick high-green" style="height: 60%;"></div>
-                    <div class="candlestick low-red" style="height: 45%;"></div>
-                    <div class="candlestick high-green" style="height: 75%;"></div>
-                    <div class="candlestick high-green" style="height: 85%;"></div>
+            <div class="card-body" style="display: block; opacity: 1;">
+                <textarea id="social-share-text" placeholder="Draft share payload text message updates..." style="height: 45px; margin-bottom: 0.5rem;"></textarea>
+                <div style="display: flex; gap: 0.4rem;">
+                    <button onclick="shareToPlatform('X')" style="padding: 4px 8px; font-size: 0.75rem; flex: 1;">SHARE TO X</button>
+                    <button onclick="shareToPlatform('TG')" style="padding: 4px 8px; font-size: 0.75rem; flex: 1;">PING TG</button>
                 </div>
             </div>
         </section>
 
-        <!-- MODULE 17: STOCK MARKET TRACKER BOARD -->
-        <section class="widget-card v4-card" id="stock-market-board">
+        <!-- 🏥 PANEL 7: VITAL & BMI HEALTH TRACKER -->
+        <section class="widget-card" id="vital-health-tracker">
             <div class="card-header">
-                <h2><i class="fa-solid fa-chart-line"></i> Stock Market Monitor</h2>
-                <span class="v4-badge">V-4</span>
+                <h2>Vital & BMI (Sync Active)</h2>
+                <span id="live-clock-display" class="sci-fi-tag-blue">00:00:00 AM</span>
             </div>
-            <div class="card-body">
-                <div class="utility-list">
-                    <div class="list-item mb-2" style="border-left-color: var(--accent-green)">
-                        <span>PSEi (Philippines)</span>
-                        <span class="amount-tag" id="stock-psei">7,240.50 (+1.2%)</span>
-                    </div>
-                    <div class="list-item mb-2" style="border-left-color: var(--accent-red)">
-                        <span>SPY (S&P 500)</span>
-                        <span class="amount-tag" id="stock-spy" style="color: var(--accent-red)">5,710.25 (-0.4%)</span>
-                    </div>
+            <div class="card-body" style="display: block; opacity: 1;">
+                <div style="display: flex; gap: 0.25rem; margin-bottom: 0.5rem;">
+                    <input type="number" id="health-weight" placeholder="W (kg)" style="margin-bottom:0;">
+                    <input type="number" id="health-height" placeholder="H (cm)" style="margin-bottom:0;">
+                    <button onclick="calculateMetricsBMI()" style="padding: 2px 6px; font-size: 0.7rem;">CALC</button>
                 </div>
+                <div id="health-summary-pane" class="sci-fi-row-item" style="font-size:0.75rem; color: var(--neon-blue);">Enter inputs to query profile metrics...</div>
             </div>
         </section>
 
-        <!-- MODULE 18: GLOBAL FX RATE GRID -->
-        <section class="widget-card v4-card" id="fx-rate-grid">
+        <!-- 🌤️ PANEL 8: SYSTEM PERFORMANCE & WEATHER TELEMETRY -->
+        <section class="widget-card" id="daily-vitals-dashboard">
             <div class="card-header">
-                <h2><i class="fa-solid fa-money-bill-transfer"></i> FX Rate Matrix</h2>
-                <span class="v4-badge">V-4</span>
+                <h2>System Analytics & Environment</h2>
             </div>
-            <div class="card-body">
-                <div class="audio-control-row">
-                    <span>USD / PHP</span>
-                    <strong class="amount-tag" id="fx-usd-php">56.42</strong>
+            <div class="card-body" style="display: block; opacity: 1;">
+                <div class="sci-fi-row-item">
+                    <span>Atmospheric Telemetry:</span>
+                    <span class="v3-badge sci-fi-tag-green">San Pablo City • Syncing...</span>
                 </div>
-                <div class="audio-control-row">
-                    <span>EUR / PHP</span>
-                    <strong class="amount-tag" id="fx-eur-php">61.28</strong>
-                </div>
-            </div>
-        </section>
-
-        <!-- MODULE 19: FINANCIAL NEWS & ECONOMIC FEEDS -->
-        <section class="widget-card v4-card" id="financial-news-feed">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-newspaper"></i> Market & Economic Feeds</h2>
-                <span class="v4-badge">V-4</span>
-            </div>
-            <div class="card-body">
-                <div class="chat-display-box" id="news-feed-container" style="min-height: 140px;">
-                    <div class="ai-bubble system-msg">🗓️ Loading economic indicators...</div>
-                </div>
-                <button onclick="refreshFinancialNews()" class="btn-secondary w-100"><i class="fa-solid fa-rotate"></i> Refresh Feeds</button>
-            </div>
-        </section>
-
-        <!-- ==================== VERSION 3 (V-3) MODULES ==================== -->
-        <!-- MODULE 11: POMODORO TIMER -->
-        <section class="widget-card v3-card" id="pomodoro-timer">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-stopwatch"></i> Pomodoro Timer</h2>
-                <span class="v3-badge">V-3</span>
-            </div>
-            <div class="card-body text-center">
-                <div class="timer-display" id="pomodoro-display">25:00</div>
-                <div class="export-options-grid mt-2">
-                    <button id="pomodoro-start" class="btn-primary"><i class="fa-solid fa-play"></i> Start</button>
-                    <button id="pomodoro-pause" class="btn-secondary"><i class="fa-solid fa-pause"></i> Pause</button>
-                    <button id="pomodoro-reset" class="btn-secondary"><i class="fa-solid fa-rotate-left"></i> Reset</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- MODULE 12: STANDARD CALCULATOR -->
-        <section class="widget-card v3-card" id="calc-workspace">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-calculator"></i> Utility Calculator</h2>
-                <span class="v3-badge">V-3</span>
-            </div>
-            <div class="card-body">
-                <input type="text" id="calc-screen" readonly placeholder="0" class="text-right mb-2">
-                <div class="calc-buttons-grid">
-                    <button onclick="appendCalc('7')" class="tool-btn">7</button>
-                    <button onclick="appendCalc('8')" class="tool-btn">8</button>
-                    <button onclick="appendCalc('9')" class="tool-btn">9</button>
-                    <button onclick="appendCalc('/')" class="export-btn word">/</button>
-                    
-                    <button onclick="appendCalc('4')" class="tool-btn">4</button>
-                    <button onclick="appendCalc('5')" class="tool-btn">5</button>
-                    <button onclick="appendCalc('6')" class="tool-btn">6</button>
-                    <button onclick="appendCalc('*')" class="export-btn word">*</button>
-                    
-                    <button onclick="appendCalc('1')" class="tool-btn">1</button>
-                    <button onclick="appendCalc('2')" class="tool-btn">2</button>
-                    <button onclick="appendCalc('3')" class="tool-btn">3</button>
-                    <button onclick="appendCalc('-')" class="export-btn word">-</button>
-                    
-                    <button onclick="clearCalc()" class="export-btn pdf">C</button>
-                    <button onclick="appendCalc('0')" class="tool-btn">0</button>
-                    <button onclick="executeCalc()" class="btn-primary">=</button>
-                    <button onclick="appendCalc('+')" class="export-btn word">+</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- MODULE 13: GLOBAL CURRENCY CONVERTER -->
-        <section class="widget-card v3-card" id="currency-converter-card">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-coins"></i> Currency Converter</h2>
-                <span class="v3-badge">V-3</span>
-            </div>
-            <div class="card-body">
-                <div class="input-mix-row mb-2" style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
-                    <input type="number" id="conv-amount" value="1" placeholder="Amount" style="flex: 1; margin-bottom: 0;">
-                    <select id="conv-from" style="width: auto; margin-bottom: 0;">
-                        <option value="PHP" selected>PHP (₱)</option>
-                        <option value="USD">USD ($)</option>
-                    </select>
-                </div>
-                <div class="input-mix-row mb-2" style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
-                    <input type="text" id="conv-result" readonly placeholder="Resulting Conversion" style="flex: 1; margin-bottom: 0; background: #0b0b0d; color: var(--accent-green);">
-                    <select id="conv-to" style="width: auto; margin-bottom: 0;">
-                        <option value="USD" selected>USD ($)</option>
-                        <option value="PHP">PHP (₱)</option>
-                    </select>
-                </div>
-                <button onclick="triggerConversionMath()" class="btn-primary w-100" style="width: 100%;"><i class="fa-solid fa-right-left"></i> Convert Exchange</button>
-            </div>
-        </section>
-        <!-- MODULE 14: BMI & VITAL SIGNS HEALTH TRACKER -->
-        <section class="widget-card v3-card" id="vital-health-tracker">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-heart-pulse"></i> Vital Signs & BMI Tracker</h2>
-                <span class="v3-badge">V-3</span>
-            </div>
-            <div class="card-body">
-                <div class="sandbox-tools-grid mb-2">
-                    <input type="number" id="health-weight" placeholder="Weight (kg)">
-                    <input type="number" id="health-height" placeholder="Height (cm)">
-                    <button onclick="calculateMetricsBMI()" class="btn-primary">Calc BMI</button>
-                </div>
-                <div class="health-metrics-grid">
-                    <div class="metric-input-item">
-                        <label><i class="fa-solid fa-faucet-water"></i> Water (ml)</label>
-                        <input type="number" id="track-water" placeholder="2500">
-                    </div>
-                    <div class="metric-input-item">
-                        <label><i class="fa-solid fa-apple-whole"></i> Sugar (mg/dL)</label>
-                        <input type="number" id="track-sugar" placeholder="90">
-                    </div>
-                    <div class="metric-input-item">
-                        <label><i class="fa-solid fa-droplet"></i> Cholesterol</label>
-                        <input type="number" id="track-cholesterol" placeholder="180">
-                    </div>
-                </div>
-                <div id="health-summary-pane" class="results-preview-pane hidden"></div>
-            </div>
-        </section>
-
-        <!-- MODULE 15: LIVE ALARM, CALENDAR, NOTES & WEATHER WIDGET -->
-        <section class="widget-card v3-card" id="daily-vitals-dashboard">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-calendar-day"></i> Schedule & Live Vitals</h2>
-                <span class="v3-badge">V-3</span>
-            </div>
-            <div class="card-body">
-                <div class="status-indicator-row mb-2">
-                    <span><i class="fa-solid fa-clock"></i> Live Clock:</span>
-                    <span id="live-clock-display" class="amount-tag">00:00:00 AM</span>
-                </div>
-                <div class="status-indicator-row mb-2">
-                    <span><i class="fa-solid fa-cloud-sun"></i> Live Weather:</span>
-                    <span class="v3-badge">San Pablo City, PH • 29°C</span>
-                </div>
-                <textarea id="v3-notes-input" placeholder="Type quick daily notes or schedule reminders here..." class="mb-2"></textarea>
-                <div class="input-mix-row">
-                    <input type="time" id="alarm-time">
-                    <button onclick="setWorkspaceAlarm()" class="btn-secondary"><i class="fa-solid fa-bell"></i> Set Alarm</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== VERSION 2 (V-2) MODULES ==================== -->
-        <!-- MODULE 6: AI WORKSPACE & WRITING ENGINE -->
-        <section class="widget-card v2-card" id="ai-workspace">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-brain"></i> AI Workspace & Writer</h2>
-                <span class="v2-badge">V-2</span>
-            </div>
-            <div class="card-body">
-                <div class="ai-config-row">
-                    <label>Creativity:</label>
-                    <select id="ai-creativity">
-                        <option value="0.2">Strict / Code (0.2)</option>
-                        <option value="0.7" selected>Balanced / Blog (0.7)</option>
-                    </select>
-                </div>
-                <div class="chat-display-box" id="ai-chat-output">
-                    <div class="ai-bubble system-msg">System: AI Core Initialized. Ready for prompt inputs...</div>
-                </div>
-                <div class="input-mix-row">
-                    <input type="text" id="ai-prompt-input" placeholder="Ask AI to write code, rewrite logs, or brainstorm...">
-                    <button id="ai-submit-btn" class="btn-primary"><i class="fa-solid fa-paper-plane"></i></button>
-                </div>
-            </div>
-        </section>
-
-        <!-- MODULE 7: AI SEARCH INTERFACE -->
-        <section class="widget-card v2-card" id="ai-search">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-magnifying-glass-chart"></i> AI Search Interface</h2>
-                <span class="v2-badge">V-2</span>
-            </div>
-            <div class="card-body">
-                <input type="text" id="ai-search-query" placeholder="Enter deep search parameters...">
-                <button id="ai-search-btn" class="btn-secondary w-100"><i class="fa-solid fa-filter"></i> Deep Parse Query</button>
-                <div id="ai-search-results" class="results-preview-pane hidden"></div>
-            </div>
-        </section>
-
-        <!-- MODULE 8: API TESTER & JSON VIEWER -->
-        <section class="widget-card v2-card" id="api-json-tester">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-network-wired"></i> API Tester & JSON Viewer</h2>
-                <span class="v2-badge">V-2</span>
-            </div>
-            <div class="card-body">
-                <div class="api-request-bar">
-                    <select id="api-method" class="method-select">
-                        <option value="GET">GET</option>
-                        <option value="POST">POST</option>
-                    </select>
-                    <input type="text" id="api-url" value="https://pawvibe.dev" placeholder="Endpoint URL">
-                </div>
-                <button id="api-send-btn" class="btn-primary w-100 mb-2"><i class="fa-solid fa-bolt"></i> Send Request</button>
-                <textarea id="json-input" placeholder="Paste raw JSON text string here to view parsed format structure..."></textarea>
-                <button id="json-format-btn" class="btn-secondary w-100"><i class="fa-solid fa-code"></i> Format & Validate JSON</button>
-            </div>
-        </section>
-
-        <!-- MODULE 9: DEVELOPER SANDBOX UTILITIES -->
-        <section class="widget-card v2-card" id="dev-sandbox">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-cubes"></i> Regex, QR & Base64 Sandbox</h2>
-                <span class="v2-badge">V-2</span>
-            </div>
-            <div class="card-body">
-                <input type="text" id="sandbox-input" placeholder="Input text for conversions...">
-                <div class="sandbox-tools-grid">
-                    <button onclick="runBase64Encode()" class="tool-btn"><i class="fa-solid fa-lock"></i> B64 Encode</button>
-                    <button onclick="runRegexCheck()" class="tool-btn"><i class="fa-solid fa-arrow-font"></i> Match Regex</button>
-                    <button onclick="generateMockQR()" class="tool-btn"><i class="fa-solid fa-qrcode"></i> Mock QR</button>
-                </div>
-                <div id="sandbox-output-pane" class="results-preview-pane hidden"></div>
-            </div>
-        </section>
-
-        <!-- MODULE 10: ACCOUNTS, SYNC & BACKUP PROFILE -->
-        <section class="widget-card v2-card" id="cloud-sync-profile">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-cloud-arrow-up"></i> Account Profiles & Sync</h2>
-                <span class="v2-badge">V-2</span>
-            </div>
-            <div class="card-body">
-                <div class="status-indicator-row">
-                    <span>Sync Status:</span>
-                    <span class="status-tag active-tag"><i class="fa-solid fa-circle-check"></i> Connected (Local)</span>
-                </div>
-                <div class="export-options-grid mt-2">
-                    <button onclick="triggerLocalBackup()" class="btn-secondary"><i class="fa-solid fa-download"></i> Backup State</button>
-                    <button onclick="triggerCloudSync()" class="btn-primary"><i class="fa-solid fa-sync"></i> Cloud Sync</button>
-                </div>
+                <div class="sci-fi-row-item"><span>CPU Core Load Status:</span><span class="sci-fi-tag-blue">87% Active</span></div>
             </div>
         </section>
 
     </main>
 
-    <!-- App Engine JavaScript link -->
     <script src="assets/js/app.js"></script>
 </body>
 </html>
