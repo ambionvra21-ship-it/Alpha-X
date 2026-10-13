@@ -399,3 +399,54 @@ button {
     background-color: var(--accent-red);
     box-shadow: 0 0 8px rgba(248, 113, 113, 0.4);
 }
+
+/* --- Version 5 (V-5) Stylesheet Enhancements --- */
+.v5-card {
+    border: 1px dashed #ec4899 !important;
+}
+
+.v5-badge {
+    background: #ec489924;
+    border: 1px solid #f472b6;
+    color: #f472b6;
+    font-size: 0.65rem;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Social link buttons grid design layout */
+.social-link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: opacity 0.2s ease;
+}
+
+.social-link-btn:hover { opacity: 0.85; }
+
+/* Official Brand Colors definitions */
+.fb-theme { background-color: #1877f2; }
+.x-theme { background-color: #000000; border: 1px solid var(--border-color); }
+.ig-theme { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+.tg-theme, .tg-theme-btn { background-color: #24a1de; color: white !important; }
+.dc-theme { background-color: #5865f2; }
+
+.small-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.broadcast-box {
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+}

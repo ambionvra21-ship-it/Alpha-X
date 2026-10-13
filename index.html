@@ -119,6 +119,40 @@
     
         
         
+        
+        <!-- ==================== VERSION 5 (V-5) MODULES ==================== -->
+        <!-- MODULE 20: SOCIAL MEDIA LINKS & PANEL CONTROLLERS -->
+        <section class="widget-card v5-card" id="social-media-channels">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-share-nodes"></i> Social Network Grid</h2>
+                <span class="v5-badge">V-5</span>
+            </div>
+            <div class="card-body">
+                <!-- Anchor Link Framework Matrix -->
+                <div class="sandbox-tools-grid mb-2">
+                    <a href="https://facebook.com" target="_blank" class="social-link-btn fb-theme"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                    <a href="https://x.com" target="_blank" class="social-link-btn x-theme"><i class="fa-brands fa-x-twitter"></i> X / Twitter</a>
+                    <a href="https://instagram.com" target="_blank" class="social-link-btn ig-theme"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                </div>
+                <div class="sandbox-tools-grid mb-2">
+                    <a href="https://t.me" target="_blank" class="social-link-btn tg-theme"><i class="fa-brands fa-telegram"></i> Telegram</a>
+                    <a href="https://discord.com" target="_blank" class="social-link-btn dc-theme"><i class="fa-brands fa-discord"></i> Discord</a>
+                    <button onclick="copyAllSocialHandles()" class="tool-btn"><i class="fa-solid fa-copy"></i> Copy Tags</button>
+                </div>
+                
+                <!-- Cross-Platform Text Sharing Broadcaster Layout -->
+                <div class="broadcast-box mt-2">
+                    <label class="small-label">Draft Network Share Text:</label>
+                    <textarea id="social-share-text" placeholder="Type a post update to broadcast across your platform links..."></textarea>
+                    <div class="export-options-grid">
+                        <button onclick="shareToPlatform('X')" class="btn-secondary"><i class="fa-brands fa-x-twitter"></i> Share to X</button>
+                        <button onclick="shareToPlatform('FB')" class="btn-primary"><i class="fa-brands fa-facebook-f"></i> Post to FB</button>
+                        <button onclick="shareToPlatform('TG')" class="btn-secondary tg-theme-btn"><i class="fa-brands fa-telegram"></i> Ping TG</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ==================== VERSION 4 (V-4) MODULES ==================== -->
         <!-- MODULE 16: CRYPTO LIVE EXCHANGE LAYOUT CHARTS -->
         <section class="widget-card v4-card" id="crypto-exchange-board">

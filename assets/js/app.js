@@ -514,3 +514,39 @@ function runLiveMarketTickerFluctuations() {
         }
     }
 }
+
+// --- Version 5 (V-5) Social Network Intent Broadcaster ---
+
+function copyAllSocialHandles() {
+    const defaultTags = "@Devilmycry666_Workspace #BuildInPublic #DeveloperTools";
+    navigator.clipboard.writeText(defaultTags);
+    alert("Project workspace identifier tags saved to clipboard:\n" + defaultTags);
+}
+
+function shareToPlatform(platformId) {
+    const textInput = document.getElementById('social-share-text');
+    if (!textInput) return;
+    
+    const postContent = textInput.value.trim();
+    if (!postContent) {
+        alert("Please enter a custom message update inside the textarea to share!");
+        return;
+    }
+    
+    // URL-encode text content safely for network intent schemas
+    const encodedText = encodeURIComponent(postContent);
+    let targetIntentUrl = '';
+    
+    if (platformId === 'X') {
+        targetIntentUrl = `https://x.com{encodedText}`;
+    } else if (platformId === 'FB') {
+        targetIntentUrl = `https://facebook.com{encodedText}`;
+    } else if (platformId === 'TG') {
+        targetIntentUrl = `https://t.me{encodedText}`;
+    }
+    
+    // Open target network intent view cleanly inside an external browser tab
+    if (targetIntentUrl) {
+        window.open(targetIntentUrl, '_blank');
+    }
+}
