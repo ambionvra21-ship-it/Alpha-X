@@ -576,3 +576,52 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+// --- BATCH 14: VITAL HEALTH TRACKER & TIME ENGINE RESTORATION ---
+function calculateMetricsBMI() {
+    const weightInput = document.getElementById('health-weight');
+    const heightInput = document.getElementById('health-height');
+    const summaryPane = document.getElementById('health-summary-pane');
+
+    if (!weightInput || !heightInput || !summaryPane) return;
+
+    const weight = parseFloat(weightInput.value);
+    const heightCm = parseFloat(heightInput.value);
+
+    if (!weight || !heightCm || isNaN(weight) || isNaN(heightCm)) {
+        alert("Please enter valid numeric weight (kg) and height (cm) indicators!");
+        return;
+    }
+
+    const heightMeters = heightCm / 100;
+    const bmiValue = (weight / (heightMeters * heightMeters)).toFixed(1);
+    
+    let classification = "Normal Weight";
+    if (bmiValue < 18.5) classification = "Underweight";
+    else if (bmiValue >= 25 && bmiValue < 30) classification = "Overweight";
+    else if (bmiValue >= 30) classification = "Obese";
+
+    // Inject tactical evaluation logs directly back into the console section view
+    summaryPane.classList.remove('hidden');
+    summaryPane.style.color = "var(--neon-blue)";
+    summaryPane.innerHTML = `🧬 [BIOMETRIC PROFILE SYNCHRONIZED]<br>Calculated BMI Body Index: <strong>${bmiValue}</strong> (${classification})<br>Telemetry Status: Stable • Storage Node Active`;
+}
+
+// Ensure the live tactical time string ticks continuously every second
+function restartMasterClockEngine() {
+    const clockDisplay = document.getElementById('live-clock-display');
+    if (!clockDisplay) return;
+
+    setInterval(() => {
+        const currentTime = new Date();
+        clockDisplay.textContent = currentTime.toLocaleTimeString();
+    }, 1000);
+}
+
+// Mount the repaired execution channels straight into the document startup thread
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+        restartMasterClockEngine();
+        console.log("✔ Biometric calculator engine and time channels re-anchored successfully!");
+    }, 1000);
+});
