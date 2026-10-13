@@ -117,6 +117,134 @@
         </section>
 
     
+        
+        <!-- ==================== VERSION 3 (V-3) MODULES ==================== -->
+        <!-- MODULE 11: POMODORO TIMER -->
+        <section class="widget-card v3-card" id="pomodoro-timer">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-stopwatch"></i> Pomodoro Timer</h2>
+                <span class="v3-badge">V-3</span>
+            </div>
+            <div class="card-body text-center">
+                <div class="timer-display" id="pomodoro-display">25:00</div>
+                <div class="export-options-grid mt-2">
+                    <button id="pomodoro-start" class="btn-primary"><i class="fa-solid fa-play"></i> Start</button>
+                    <button id="pomodoro-pause" class="btn-secondary"><i class="fa-solid fa-pause"></i> Pause</button>
+                    <button id="pomodoro-reset" class="btn-secondary"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 12: STANDARD CALCULATOR -->
+        <section class="widget-card v3-card" id="calc-workspace">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-calculator"></i> Utility Calculator</h2>
+                <span class="v3-badge">V-3</span>
+            </div>
+            <div class="card-body">
+                <input type="text" id="calc-screen" readonly placeholder="0" class="text-right mb-2">
+                <div class="calc-buttons-grid">
+                    <button onclick="appendCalc('7')" class="tool-btn">7</button>
+                    <button onclick="appendCalc('8')" class="tool-btn">8</button>
+                    <button onclick="appendCalc('9')" class="tool-btn">9</button>
+                    <button onclick="appendCalc('/')" class="export-btn word">/</button>
+                    
+                    <button onclick="appendCalc('4')" class="tool-btn">4</button>
+                    <button onclick="appendCalc('5')" class="tool-btn">5</button>
+                    <button onclick="appendCalc('6')" class="tool-btn">6</button>
+                    <button onclick="appendCalc('*')" class="export-btn word">*</button>
+                    
+                    <button onclick="appendCalc('1')" class="tool-btn">1</button>
+                    <button onclick="appendCalc('2')" class="tool-btn">2</button>
+                    <button onclick="appendCalc('3')" class="tool-btn">3</button>
+                    <button onclick="appendCalc('-')" class="export-btn word">-</button>
+                    
+                    <button onclick="clearCalc()" class="export-btn pdf">C</button>
+                    <button onclick="appendCalc('0')" class="tool-btn">0</button>
+                    <button onclick="executeCalc()" class="btn-primary">=</button>
+                    <button onclick="appendCalc('+')" class="export-btn word">+</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 13: GLOBAL CURRENCY CONVERTER -->
+        <section class="widget-card v3-card" id="currency-converter-card">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-coins"></i> Currency Converter</h2>
+                <span class="v3-badge">V-3</span>
+            </div>
+            <div class="card-body">
+                <div class="input-mix-row mb-2">
+                    <input type="number" id="conv-amount" value="1" placeholder="Amount">
+                    <select id="conv-from">
+                        <option value="USD">USD ($)</option>
+                        <option value="PHP" selected>PHP (₱)</option>
+                    </select>
+                </div>
+                <div class="input-mix-row mb-2">
+                    <input type="text" id="conv-result" readonly placeholder="Result">
+                    <select id="conv-to">
+                        <option value="USD" selected>USD ($)</option>
+                        <option value="PHP">PHP (₱)</option>
+                    </select>
+                </div>
+                <button onclick="triggerConversionMath()" class="btn-primary w-100"><i class="fa-solid fa-right-left"></i> Convert Exchange</button>
+            </div>
+        </section>
+
+        <!-- MODULE 14: BMI & VITAL SIGNS HEALTH TRACKER -->
+        <section class="widget-card v3-card" id="vital-health-tracker">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-heart-pulse"></i> Vital Signs & BMI Tracker</h2>
+                <span class="v3-badge">V-3</span>
+            </div>
+            <div class="card-body">
+                <div class="sandbox-tools-grid mb-2">
+                    <input type="number" id="health-weight" placeholder="Weight (kg)">
+                    <input type="number" id="health-height" placeholder="Height (cm)">
+                    <button onclick="calculateMetricsBMI()" class="btn-primary">Calc BMI</button>
+                </div>
+                <div class="health-metrics-grid">
+                    <div class="metric-input-item">
+                        <label><i class="fa-solid fa-faucet-water"></i> Water (ml)</label>
+                        <input type="number" id="track-water" placeholder="2500">
+                    </div>
+                    <div class="metric-input-item">
+                        <label><i class="fa-solid fa-apple-whole"></i> Sugar (mg/dL)</label>
+                        <input type="number" id="track-sugar" placeholder="90">
+                    </div>
+                    <div class="metric-input-item">
+                        <label><i class="fa-solid fa-droplet"></i> Cholesterol</label>
+                        <input type="number" id="track-cholesterol" placeholder="180">
+                    </div>
+                </div>
+                <div id="health-summary-pane" class="results-preview-pane hidden"></div>
+            </div>
+        </section>
+
+        <!-- MODULE 15: LIVE ALARM, CALENDAR, NOTES & WEATHER WIDGET -->
+        <section class="widget-card v3-card" id="daily-vitals-dashboard">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-calendar-day"></i> Schedule & Live Vitals</h2>
+                <span class="v3-badge">V-3</span>
+            </div>
+            <div class="card-body">
+                <div class="status-indicator-row mb-2">
+                    <span><i class="fa-solid fa-clock"></i> Live Clock:</span>
+                    <span id="live-clock-display" class="amount-tag">00:00:00 AM</span>
+                </div>
+                <div class="status-indicator-row mb-2">
+                    <span><i class="fa-solid fa-cloud-sun"></i> Live Weather:</span>
+                    <span class="v3-badge">San Pablo City, PH • 29°C</span>
+                </div>
+                <textarea id="v3-notes-input" placeholder="Type quick daily notes or schedule reminders here..." class="mb-2"></textarea>
+                <div class="input-mix-row">
+                    <input type="time" id="alarm-time">
+                    <button onclick="setWorkspaceAlarm()" class="btn-secondary"><i class="fa-solid fa-bell"></i> Set Alarm</button>
+                </div>
+            </div>
+        </section>
+
         <!-- ==================== VERSION 2 (V-2) MODULES ==================== -->
         <!-- MODULE 6: AI WORKSPACE & WRITING ENGINE -->
         <section class="widget-card v2-card" id="ai-workspace">

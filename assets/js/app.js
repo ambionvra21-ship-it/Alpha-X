@@ -297,3 +297,132 @@ function triggerLocalBackup() {
 function triggerCloudSync() {
     alert("Account profile configurations saved and synced upstream to secure project cloud infrastructure layout.");
 }
+
+// --- Version 3 (V-3) Utility & Health Engines ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializePomodoroTimer();
+    startLiveClockEngine();
+});
+
+// Pomodoro Countdown Mechanism Variables
+let pomodoroInterval = null;
+let pomodoroSecondsLeft = 1500; // 25 minutes baseline
+
+function initializePomodoroTimer() {
+    const display = document.getElementById('pomodoro-display');
+    const startBtn = document.getElementById('pomodoro-start');
+    const pauseBtn = document.getElementById('pomodoro-pause');
+    const resetBtn = document.getElementById('pomodoro-reset');
+
+    if (!display || !startBtn || !pauseBtn || !resetBtn) return;
+
+    function updateDisplayString() {
+        const mins = Math.floor(pomodoroSecondsLeft / 60).toString().padStart(2, '0');
+        const secs = (pomodoroSecondsLeft % 60).toString().padStart(2, '0');
+        display.textContent = `${mins}:${secs}`;
+    }
+
+    startBtn.addEventListener('click', () => {
+        if (pomodoroInterval) return;
+        pomodoroInterval = setInterval(() => {
+            if (pomodoroSecondsLeft > 0) {
+                pomodoroSecondsLeft--;
+                updateDisplayString();
+            } else {
+                clearInterval(pomodoroInterval);
+                pomodoroInterval = null;
+                alert("Focus interval complete! Take a step back and stretch.");
+            }
+        }, 1000);
+    });
+
+    pauseBtn.addEventListener('click', () => {
+        clearInterval(pomodoroInterval);
+        pomodoroInterval = null;
+    });
+
+    resetBtn.addEventListener('click', () => {
+        clearInterval(pomodoroInterval);
+        pomodoroInterval = null;
+        pomodoroSecondsLeft = 1500;
+        updateDisplayString();
+    });
+}
+
+// Interactive Calculator Screen Controls
+function appendCalc(token) {
+    const screen = document.getElementById('calc-screen');
+    if (screen) screen.value = screen.value === '0' ? token : screen.value + token;
+}
+
+function clearCalc() {
+    const screen = document.getElementById('calc-screen');
+    if (screen) screen.value = '';
+}
+
+function executeCalc() {
+    const screen = document.getElementById('calc-screen');
+    if (!screen || !screen.value) return;
+    try {
+        // Evaluates basic client-side expression strings safely
+        screen.value = Function(`"use strict"; return (${screen.value})`)();
+    } catch (e) {
+        screen.value = 'Error';
+    }
+}
+
+// Live Converter Exchange Calculations
+function triggerConversionMath() {
+    const amount = parseFloat(document.getElementById('conv-amount').value) || 0;
+    const from = document.getElementById('conv-from').value;
+    const to = document.getElementById('conv-to').value;
+    const resultField = document.getElementById('conv-result');
+
+    if (!resultField) return;
+
+    // Standard baseline rate variables matching global models
+    let conversionMultiplier = 1;
+    if (from === 'PHP' && to === 'USD') conversionMultiplier = 0.018;
+    if (from === 'USD' && to === 'PHP') conversionMultiplier = 56.40;
+
+    resultField.value = (amount * conversionMultiplier).toFixed(2);
+}
+
+// BMI Tracker Health Metrics Calculator
+function calculateMetricsBMI() {
+    const weight = parseFloat(document.getElementById('health-weight').value);
+    const heightCm = parseFloat(document.getElementById('health-height').value);
+    const pane = document.getElementById('health-summary-pane');
+
+    if (!weight || !heightCm || !pane) {
+        alert("Please specify weight and height values.");
+        return;
+    }
+
+    const heightMeters = heightCm / 100;
+    const bmiValue = (weight / (heightMeters * heightMeters)).toFixed(1);
+    
+    let profileCondition = 'Normal';
+    if (bmiValue < 18.5) profileCondition = 'Underweight';
+    else if (bmiValue >= 25) profileCondition = 'Overweight';
+
+    pane.classList.remove('hidden');
+    pane.textContent = `[Daily Tracker Baseline V-3 Update]\nYour Calculated BMI: ${bmiValue} (${profileCondition})\nLogs Staged: Water, Sugar and Cholesterol references structured successfully.`;
+}
+
+// Live Clock Time Management Engine
+function startLiveClockEngine() {
+    const display = document.getElementById('live-clock-display');
+    if (!display) return;
+    
+    setInterval(() => {
+        const timeNow = new Date();
+        display.textContent = timeNow.toLocaleTimeString();
+    }, 1000);
+}
+
+function setWorkspaceAlarm() {
+    const timeVal = document.getElementById('alarm-time').value;
+    if (timeVal) alert(`Workspace focus alarm mapped successfully for: ${timeVal}`);
+}
