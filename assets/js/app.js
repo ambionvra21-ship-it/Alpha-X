@@ -426,3 +426,91 @@ function setWorkspaceAlarm() {
     const timeVal = document.getElementById('alarm-time').value;
     if (timeVal) alert(`Workspace focus alarm mapped successfully for: ${timeVal}`);
 }
+
+// --- Version 4 (V-4) Financial Chart & News Engines ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateCryptoMockChart();
+    refreshFinancialNews();
+    // Start continuous minor live price tick fluctuations
+    setInterval(runLiveMarketTickerFluctuations, 3000);
+});
+
+const v4FinancialData = {
+    cryptoPrices: {
+        BTC: { price: 62450.00, trend: 'up' },
+        ETH: { price: 2430.50, trend: 'up' },
+        SOL: { price: 142.25, trend: 'down' }
+    },
+    newsTemplates: [
+        "🗓️ [Economic Calendar] Central Bank keeps key borrowing rates steady; retail indices steady.",
+        "📈 [Market Alert] Digital assets show strong momentum following tech sector volume increases.",
+        "📊 [FX Update] USD/PHP trades steadily near 56.40 baseline markers in afternoon sessions.",
+        "📉 [Stock Brief] Composite stock index experiences minor profit-taking across blue-chip boards."
+    ]
+};
+
+function updateCryptoMockChart() {
+    const selector = document.getElementById('crypto-asset-select');
+    const priceDisplay = document.getElementById('crypto-live-price');
+    const chartViewport = document.getElementById('crypto-chart-viewport');
+    
+    if (!selector || !priceDisplay || !chartViewport) return;
+    
+    const asset = selector.value;
+    const data = v4FinancialData.cryptoPrices[asset];
+    
+    priceDisplay.textContent = `\$${data.price.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+    priceDisplay.style.color = data.trend === 'up' ? 'var(--accent-green)' : 'var(--accent-red)';
+    
+    // Scramble candlestick heights randomly to simulate asset price changes
+    const candles = chartViewport.querySelectorAll('.candlestick');
+    candles.forEach(candle => {
+        const randomHeight = Math.floor(Math.random() * 50) + 35;
+        candle.style.height = `${randomHeight}%`;
+        if (Math.random() > 0.4) {
+            candle.className = 'candlestick high-green';
+        } else {
+            candle.className = 'candlestick low-red';
+        }
+    });
+}
+
+function refreshFinancialNews() {
+    const container = document.getElementById('news-feed-container');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    // Sort array randomly to show changing news feeds
+    const shuffledNews = [...v4FinancialData.newsTemplates].sort(() => 0.5 - Math.random());
+    
+    shuffledNews.forEach(item => {
+        const bubble = document.createElement('div');
+        bubble.className = 'ai-bubble reply-msg';
+        bubble.style.fontSize = '0.8rem';
+        bubble.style.marginBottom = '0.4rem';
+        bubble.textContent = item;
+        container.appendChild(bubble);
+    });
+}
+
+function runLiveMarketTickerFluctuations() {
+    // Minor price updates to verify active data loops
+    const cryptoKeys = Object.keys(v4FinancialData.cryptoPrices);
+    const randomKey = cryptoKeys[Math.floor(Math.random() * cryptoKeys.length)];
+    const priceChange = (Math.random() - 0.5) * (v4FinancialData.cryptoPrices[randomKey].price * 0.002);
+    
+    v4FinancialData.cryptoPrices[randomKey].price += priceChange;
+    v4FinancialData.cryptoPrices[randomKey].trend = priceChange >= 0 ? 'up' : 'down';
+    
+    // If the changed asset matches the current selection view, update the layout interface
+    const selector = document.getElementById('crypto-asset-select');
+    if (selector && selector.value === randomKey) {
+        const priceDisplay = document.getElementById('crypto-live-price');
+        if (priceDisplay) {
+            priceDisplay.textContent = `\$${v4FinancialData.cryptoPrices[randomKey].price.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            priceDisplay.style.color = priceChange >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
+        }
+    }
+}

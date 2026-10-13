@@ -118,6 +118,85 @@
 
     
         
+        
+        <!-- ==================== VERSION 4 (V-4) MODULES ==================== -->
+        <!-- MODULE 16: CRYPTO LIVE EXCHANGE LAYOUT CHARTS -->
+        <section class="widget-card v4-card" id="crypto-exchange-board">
+            <div class="card-header">
+                <h2><i class="fa-brands fa-bitcoin"></i> Crypto Chart Matrix</h2>
+                <span class="v4-badge">V-4</span>
+            </div>
+            <div class="card-body">
+                <div class="input-mix-row mb-2">
+                    <select id="crypto-asset-select" onchange="updateCryptoMockChart()">
+                        <option value="BTC" selected>BTC / USD</option>
+                        <option value="ETH">ETH / USD</option>
+                        <option value="SOL">SOL / USD</option>
+                    </select>
+                    <span id="crypto-live-price" class="amount-tag">Loading...</span>
+                </div>
+                <!-- Interactive grid mimicking standard candlestick charts -->
+                <div class="chart-canvas-mock" id="crypto-chart-viewport">
+                    <div class="candlestick high-green" style="height: 60%;"></div>
+                    <div class="candlestick low-red" style="height: 45%;"></div>
+                    <div class="candlestick high-green" style="height: 75%;"></div>
+                    <div class="candlestick high-green" style="height: 85%;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 17: STOCK MARKET TRACKER BOARD -->
+        <section class="widget-card v4-card" id="stock-market-board">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-chart-line"></i> Stock Market Monitor</h2>
+                <span class="v4-badge">V-4</span>
+            </div>
+            <div class="card-body">
+                <div class="utility-list">
+                    <div class="list-item mb-2" style="border-left-color: var(--accent-green)">
+                        <span>PSEi (Philippines)</span>
+                        <span class="amount-tag" id="stock-psei">7,240.50 (+1.2%)</span>
+                    </div>
+                    <div class="list-item mb-2" style="border-left-color: var(--accent-red)">
+                        <span>SPY (S&P 500)</span>
+                        <span class="amount-tag" id="stock-spy" style="color: var(--accent-red)">5,710.25 (-0.4%)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 18: GLOBAL FX RATE GRID -->
+        <section class="widget-card v4-card" id="fx-rate-grid">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-money-bill-transfer"></i> FX Rate Matrix</h2>
+                <span class="v4-badge">V-4</span>
+            </div>
+            <div class="card-body">
+                <div class="audio-control-row">
+                    <span>USD / PHP</span>
+                    <strong class="amount-tag" id="fx-usd-php">56.42</strong>
+                </div>
+                <div class="audio-control-row">
+                    <span>EUR / PHP</span>
+                    <strong class="amount-tag" id="fx-eur-php">61.28</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 19: FINANCIAL NEWS & ECONOMIC FEEDS -->
+        <section class="widget-card v4-card" id="financial-news-feed">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-newspaper"></i> Market & Economic Feeds</h2>
+                <span class="v4-badge">V-4</span>
+            </div>
+            <div class="card-body">
+                <div class="chat-display-box" id="news-feed-container" style="min-height: 140px;">
+                    <div class="ai-bubble system-msg">🗓️ Loading economic indicators...</div>
+                </div>
+                <button onclick="refreshFinancialNews()" class="btn-secondary w-100"><i class="fa-solid fa-rotate"></i> Refresh Feeds</button>
+            </div>
+        </section>
+
         <!-- ==================== VERSION 3 (V-3) MODULES ==================== -->
         <!-- MODULE 11: POMODORO TIMER -->
         <section class="widget-card v3-card" id="pomodoro-timer">
