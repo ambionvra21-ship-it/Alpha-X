@@ -172,3 +172,128 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// --- Version 2 (V-2) Extended Logic Engines ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeAIWorkspace();
+    initializeAISearch();
+    initializeAPITester();
+});
+
+// AI Writing Simulation Core
+function initializeAIWorkspace() {
+    const submitBtn = document.getElementById('ai-submit-btn');
+    const promptInput = document.getElementById('ai-prompt-input');
+    const chatOutput = document.getElementById('ai-chat-output');
+
+    if (!submitBtn || !promptInput || !chatOutput) return;
+
+    submitBtn.addEventListener('click', () => {
+        const promptText = promptInput.value.trim();
+        if (!promptText) return;
+
+        // Render User Input bubble
+        const userDiv = document.createElement('div');
+        userDiv.className = 'ai-bubble user-msg';
+        userDiv.textContent = promptText;
+        chatOutput.appendChild(userDiv);
+        promptInput.value = '';
+
+        // Simulate AI Core processing streaming text completion
+        setTimeout(() => {
+            const replyDiv = document.createElement('div');
+            replyDiv.className = 'ai-bubble reply-msg';
+            replyDiv.innerHTML = `<strong>AI Response:</strong> Completed task matching parameter blueprint details. Output script or content draft compiled safely.`;
+            chatOutput.appendChild(replyDiv);
+            chatOutput.scrollTop = chatOutput.scrollHeight;
+        }, 600);
+    });
+}
+
+// AI Context Search Parsing Engine
+function initializeAISearch() {
+    const searchBtn = document.getElementById('ai-search-btn');
+    const queryInput = document.getElementById('ai-search-query');
+    const outputPane = document.getElementById('ai-search-results');
+
+    if (!searchBtn || !queryInput || !outputPane) return;
+
+    searchBtn.addEventListener('click', () => {
+        const query = queryInput.value.trim();
+        if (!query) return;
+
+        outputPane.classList.remove('hidden');
+        outputPane.textContent = `[Parsed Knowledge Base Layer Match]\nQuery: "${query}"\nFilters Applied: Status = Active, Mode = Raw Structural Isolation.\nNo tracker algorithmic biases discovered. Content optimized for compilation.`;
+    });
+}
+
+// API Endpoint Request & JSON Parsing Layout Controller
+function initializeAPITester() {
+    const sendBtn = document.getElementById('api-send-btn');
+    const methodSelect = document.getElementById('api-method');
+    const urlInput = document.getElementById('api-url');
+    const jsonInput = document.getElementById('json-input');
+    const formatBtn = document.getElementById('json-format-btn');
+
+    if (sendBtn && methodSelect && urlInput) {
+        sendBtn.addEventListener('click', () => {
+            alert(`Simulated API Request Broadcast Triggered:\nMethod: ${methodSelect.value}\nTarget Endpoint: ${urlInput.value}\nResponse: Status 200 OK - Active Workspace Operational`);
+        });
+    }
+
+    if (jsonInput && formatBtn) {
+        formatBtn.addEventListener('click', () => {
+            const rawString = jsonInput.value.trim();
+            if (!rawString) {
+                alert("Please paste a raw JSON string to format.");
+                return;
+            }
+            try {
+                const parsedObject = JSON.parse(rawString);
+                jsonInput.value = JSON.stringify(parsedObject, null, 4);
+            } catch (err) {
+                alert(`Invalid JSON Structural Format Detected:\n${err.message}`);
+            }
+        });
+    }
+}
+
+// Developer Sandbox Utilities Actions
+function runBase64Encode() {
+    const input = document.getElementById('sandbox-input');
+    const output = document.getElementById('sandbox-output-pane');
+    if (!input || !output || !input.value.trim()) return;
+
+    output.classList.remove('hidden');
+    output.textContent = `Base64 Encoded Result:\n${btoa(input.value.trim())}`;
+}
+
+function runRegexCheck() {
+    const input = document.getElementById('sandbox-input');
+    const output = document.getElementById('sandbox-output-pane');
+    if (!input || !output || !input.value.trim()) return;
+
+    output.classList.remove('hidden');
+    const alphaNumericRegex = /^[a-zA-Z0-9 ]+\$/;
+    const passes = alphaNumericRegex.test(input.value.trim());
+    output.textContent = `Regex Match Engine Rule ([a-zA-Z0-9]):\n${passes ? '✔ PASS - Match Standard Verified' : '❌ FAIL - Invalid Tokens Discovered'}`;
+}
+
+function generateMockQR() {
+    const input = document.getElementById('sandbox-input');
+    const output = document.getElementById('sandbox-output-pane');
+    if (!input || !output || !input.value.trim()) return;
+
+    output.classList.remove('hidden');
+    output.textContent = `[Generated Mock QR Pointer Matrix Data]\nTarget: data:image/png;base64,...(Linked to value: "${input.value.trim()}")`;
+}
+
+// Browser Session Local Account Profile Persistence Mock
+function triggerLocalBackup() {
+    alert("Application data array models synced down into temporary browser state local snapshot layout.");
+}
+
+function triggerCloudSync() {
+    alert("Account profile configurations saved and synced upstream to secure project cloud infrastructure layout.");
+}

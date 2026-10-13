@@ -209,3 +209,98 @@ button {
 .export-btn.pdf { background-color: #ef4444; }
 .export-btn.word { background-color: #3b82f6; }
 .export-btn.excel { background-color: #10b981; }
+
+/* --- Version 2 (V-2) Stylesheet Enhancements --- */
+.v2-card {
+    border: 1px dashed #c084fc !important;
+    position: relative;
+}
+
+.v2-badge {
+    background: #a855f724;
+    border: 1px solid #c084fc;
+    color: #c084fc;
+    font-size: 0.65rem;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Chat display elements */
+.chat-display-box {
+    background: #0b0b0d;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.75rem;
+    min-height: 120px;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.ai-bubble {
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    line-height: 1.4;
+}
+
+.system-msg { background: #1e1b4b; color: #a5b4fc; border-left: 2px solid #6366f1; }
+.user-msg { background: #14532d; color: #4ade80; border-left: 2px solid var(--accent-green); text-align: right; }
+.reply-msg { background: #1e293b; color: #e2e8f0; border-left: 2px solid var(--accent-blue); }
+
+.input-mix-row {
+    display: flex;
+    gap: 0.5rem;
+}
+.input-mix-row input { margin-bottom: 0; flex: 1; }
+
+/* API request styling rules */
+.api-request-bar {
+    display: flex;
+    gap: 0.5rem;
+}
+.api-request-bar select { width: auto; }
+.api-request-bar input { flex: 1; }
+
+.results-preview-pane {
+    background: #09090b;
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    white-space: pre-wrap;
+    color: var(--accent-green);
+}
+
+.hidden { display: none; }
+
+/* Tools layout adjustments */
+.sandbox-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.tool-btn {
+    background: #27272a;
+    color: var(--text-primary);
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 4px;
+}
+
+.status-indicator-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.status-tag {
+    color: var(--accent-green);
+    font-weight: bold;
+}
