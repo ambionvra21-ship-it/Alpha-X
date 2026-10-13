@@ -572,3 +572,125 @@ button {
     display: none;
 }
 .desktop-dimming-layer.active { display: block; }
+
+/* --- VERSION 6.2: HAMBURGER SIDE PANEL & STABILIZED CLICK LAYOUTS --- */
+/* Fixed card pointer events: Allow clicking header text and child text directly */
+.widget-card * {
+    pointer-events: auto; 
+}
+
+/* Header placement layout for the hamburger toggle button */
+.app-header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hamburger-menu-btn {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    background: #1a1a1e;
+    border: 1px solid var(--border-color);
+    color: var(--accent-green);
+    padding: 8px 12px;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    z-index: 100;
+}
+.hamburger-menu-btn:hover {
+    background: var(--accent-green);
+    color: #000;
+}
+
+/* Slide-out Sidebar Layout Container */
+.side-navigation-panel {
+    position: fixed;
+    top: 0;
+    left: -280px; /* Hidden offscreen by default */
+    width: 260px;
+    height: 100vh;
+    background-color: #16161a;
+    border-right: 2px solid var(--border-color);
+    z-index: 10000;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+}
+
+.side-navigation-panel.sidebar-visible {
+    left: 0; /* Slides into viewport smooth */
+}
+
+.sidebar-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.sidebar-header-row h3 {
+    font-size: 0.95rem;
+    color: var(--accent-blue);
+    letter-spacing: 0.5px;
+}
+
+.sidebar-close-action {
+    background: none;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+.sidebar-close-action:hover { color: var(--accent-red); }
+
+/* Navigation list links inside menu panel */
+.sidebar-nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar-nav-links li {
+    padding: 0.6rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.sidebar-nav-links li:hover {
+    background-color: #22c55e1a;
+    color: var(--accent-green);
+    border-left: 3px solid var(--accent-green);
+    padding-left: calc(0.75rem - 3px);
+}
+
+.sidebar-footer-info {
+    margin-top: auto;
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--border-color);
+}
+
+/* Semi-transparent backdrop blur specifically for sidebar execution panel depth */
+.sidebar-backdrop-dim {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: none;
+}
+.sidebar-backdrop-dim.active { display: block; }

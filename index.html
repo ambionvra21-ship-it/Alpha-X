@@ -12,9 +12,35 @@
 <body>
 
     <header class="app-header">
+        <button id="sidebar-toggle-btn" class="hamburger-menu-btn" title="Open Navigation Menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
         <h1><i class="fa-solid fa-terminal"></i> DEVILMYCRY666 <span class="version-tag">V-1</span></h1>
         <p class="subtitle">Mobile-Optimized Multi-Utility Control Panel</p>
     </header>
+
+    
+    <!-- Desktop Sliding Side Menu System -->
+    <nav id="desktop-sidebar-pane" class="side-navigation-panel">
+        <div class="sidebar-header-row">
+            <h3><i class="fa-solid fa-layer-group"></i> Navigation</h3>
+            <button id="sidebar-close-btn" class="sidebar-close-action"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <ul class="sidebar-nav-links">
+            <li onclick="focusWidgetWindow('expense-tracker')"><i class="fa-solid fa-wallet"></i> Expense Tracker</li>
+            <li onclick="focusWidgetWindow('clipboard-manager')"><i class="fa-solid fa-clipboard"></i> Quick Snippets</li>
+            <li onclick="focusWidgetWindow('sound-machine')"><i class="fa-solid fa-sliders"></i> Ambient Sound Machine</li>
+            <li onclick="focusWidgetWindow('email-drafter')"><i class="fa-solid fa-envelope-open-text"></i> Email Drafter</li>
+            <li onclick="focusWidgetWindow('invoice-generator')"><i class="fa-solid fa-file-invoice-dollar"></i> Invoice Generator</li>
+            <li onclick="focusWidgetWindow('social-media-channels')"><i class="fa-solid fa-share-nodes"></i> Social Network</li>
+            <li onclick="focusWidgetWindow('crypto-exchange-board')"><i class="fa-brands fa-bitcoin"></i> Crypto Chart Matrix</li>
+            <li onclick="focusWidgetWindow('ai-workspace')"><i class="fa-solid fa-brain"></i> AI Workspace</li>
+        </ul>
+        <div class="sidebar-footer-info">
+            <span class="v5-badge">DEVILMYCRY666 OS</span>
+        </div>
+    </nav>
+    <div id="sidebar-overlay-backdrop" class="sidebar-backdrop-dim"></div>
 
     <main class="workspace-grid">
         

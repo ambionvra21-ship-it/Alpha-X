@@ -471,3 +471,107 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// --- BATCH 9: STABILIZED WIDGET OPENERS & SIDEBAR NAVIGATION SYSTEMS ---
+
+function focusWidgetWindow(targetId) {
+    // Automatically close the sidebar when choosing an item
+    const sidebar = document.getElementById('desktop-sidebar-pane');
+    const sidebarBackdrop = document.getElementById('sidebar-overlay-backdrop');
+    if (sidebar) sidebar.classList.remove('sidebar-visible');
+    if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
+
+    const targetCard = document.getElementById(targetId);
+    if (!targetCard) return;
+
+    // Simulate standard desktop window pop expansion trigger action
+    const dimLayer = document.querySelector('.desktop-dimming-layer');
+    if (dimLayer) dimLayer.classList.add('active');
+
+    targetCard.classList.add('widget-window-active');
+    const closeBtn = targetCard.querySelector('.window-close-trigger');
+    if (closeBtn) closeBtn.style.display = 'block';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function rebindStabilizedDesktopWidgetSystem() {
+    console.log("🔄 Re-aligning desktop click handlers to fix unresponsive widget bugs...");
+    
+    let dimLayer = document.querySelector('.desktop-dimming-layer') || document.createElement('div');
+    if (!dimLayer.parentNode) { dimLayer.className = 'desktop-dimming-layer'; document.body.appendChild(dimLayer); }
+
+    // 1. Core Card Click Assignment Pipeline
+    document.querySelectorAll('.widget-card').forEach(card => {
+        // Clear any old messy click layouts
+        const clone = card.cloneNode(true);
+        card.parentNode.replaceChild(clone, card);
+    });
+
+    // Re-select fresh clean nodes following duplication reset routine
+    document.querySelectorAll('.widget-card').forEach(card => {
+        const header = card.querySelector('.card-header');
+        const closeBtn = header ? header.querySelector('.window-close-trigger') : null;
+
+        if (closeBtn) {
+            closeBtn.style.display = card.classList.contains('widget-window-active') ? 'block' : 'none';
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                card.classList.remove('widget-window-active');
+                dimLayer.classList.remove('active');
+                closeBtn.style.display = 'none';
+            });
+        }
+
+        card.addEventListener('click', function(e) {
+            // If the widget window app card is already expanded, do not fire open sequences
+            if (this.classList.contains('widget-window-active')) return;
+
+            // STABILIZED RULE: Check if the user is targeted at functional elements inside the layout preview cards
+            if (e.target.closest('input') || e.target.closest('textarea') || e.target.closest('button') || e.target.closest('select') || e.target.closest('a') || e.target.closest('.action-buttons')) {
+                return; // Let the custom event process naturally without interception
+            }
+
+            // Otherwise, expand the card smoothly!
+            this.classList.add('widget-window-active');
+            dimLayer.classList.add('active');
+            const cb = this.querySelector('.window-close-trigger');
+            if (cb) cb.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    // 2. Sidebar Navigation Panel Event Registration Core
+    const menuToggleBtn = document.getElementById('sidebar-toggle-btn');
+    const menuCloseBtn = document.getElementById('sidebar-close-btn');
+    const sidebarPane = document.getElementById('desktop-sidebar-pane');
+    const sidebarBackdrop = document.getElementById('sidebar-overlay-backdrop');
+
+    if (menuToggleBtn && sidebarPane && sidebarBackdrop) {
+        menuToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebarPane.classList.add('sidebar-visible');
+            sidebarBackdrop.classList.add('active');
+        });
+    }
+
+    if (menuCloseBtn && sidebarPane && sidebarBackdrop) {
+        menuCloseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebarPane.classList.remove('sidebar-visible');
+            sidebarBackdrop.classList.remove('active');
+        });
+    }
+
+    if (sidebarBackdrop && sidebarPane) {
+        sidebarBackdrop.addEventListener('click', () => {
+            sidebarPane.classList.remove('sidebar-visible');
+            sidebarBackdrop.classList.remove('active');
+        });
+    }
+}
+
+// Push bindings hook down execution sequence pipelines smoothly
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(rebindStabilizedDesktopWidgetSystem, 500);
+});
