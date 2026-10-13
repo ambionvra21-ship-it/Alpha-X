@@ -557,3 +557,76 @@ function initializeCustomWidgetsAndExtensions() {
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(initializeCustomWidgetsAndExtensions, 200);
 });
+
+// --- BATCH 8: WIDGET MANAGEMENT DESKTOP SYSTEM CONTROLLER ---
+
+function initializeDesktopWidgetSystem() {
+    console.log("🎮 Initializing Desktop Widget Engine...");
+
+    // Create a background blur dimming layer if it doesn't exist
+    let dimLayer = document.querySelector('.desktop-dimming-layer');
+    if (!dimLayer) {
+        dimLayer = document.createElement('div');
+        dimLayer.className = 'desktop-dimming-layer';
+        document.body.appendChild(dimLayer);
+    }
+
+    const allCards = document.querySelectorAll('.widget-card');
+
+    allCards.forEach(card => {
+        const header = card.querySelector('.card-header');
+        if (!header) return;
+
+        // Dynamic close action injection check
+        if (!header.querySelector('.window-close-trigger')) {
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'window-close-trigger';
+            closeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            closeBtn.style.display = 'none'; // Only visible when window expands
+            header.appendChild(closeBtn);
+        }
+
+        const closeBtn = header.querySelector('.window-close-trigger');
+
+        // Card expand listener trigger
+        card.addEventListener('click', function(e) {
+            // Prevent expanding if the user is clicking an active input field or a button inside the window
+            if (this.classList.contains('widget-window-active')) return;
+            if (e.target.closest('input') || e.target.closest('textarea') || e.target.closest('button') || e.target.closest('select') || e.target.closest('a')) return;
+
+            // Expand window view state
+            this.classList.add('widget-window-active');
+            dimLayer.classList.add('active');
+            if (closeBtn) closeBtn.style.display = 'block';
+            
+            // Adjust window positioning context boundaries smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Window minimize listener event trigger
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation(); // Avoid triggering card reopen cascade loop
+                card.classList.remove('widget-window-active');
+                dimLayer.classList.remove('active');
+                closeBtn.style.display = 'none';
+            });
+        }
+    });
+
+    // Close any open windows immediately if the user clicks anywhere on the dark backdrop blur
+    dimLayer.addEventListener('click', () => {
+        const activeWindow = document.querySelector('.widget-window-active');
+        if (activeWindow) {
+            activeWindow.classList.remove('widget-window-active');
+            dimLayer.classList.remove('active');
+            const activeCloseBtn = activeWindow.querySelector('.window-close-trigger');
+            if (activeCloseBtn) activeCloseBtn.style.display = 'none';
+        }
+    });
+}
+
+// Hook desktop window compilation cycles straight into core execution routines
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initializeDesktopWidgetSystem, 300);
+});
