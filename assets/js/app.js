@@ -387,3 +387,61 @@ document.addEventListener("DOMContentLoaded", () => {
         synchronizeLiveWorkspaceWeather();
     }, 600);
 });
+
+// --- BATCH 10: VERSION 5 (V-5 SOCIAL NETWORK INTENT BROADCASTER) ---
+function copyAllSocialHandles() {
+    const defaultTags = "@Devilmycry666_Workspace #BuildInPublic #DeveloperTools";
+    navigator.clipboard.writeText(defaultTags);
+    alert("Project workspace identifier tags saved to clipboard:\n" + defaultTags);
+}
+
+function shareToPlatform(platformId) {
+    const textInput = document.getElementById('social-share-text');
+    if (!textInput) return;
+    
+    const postContent = textInput.value.trim();
+    if (!postContent) {
+        alert("Please enter a custom message update inside the textarea to share!");
+        return;
+    }
+    
+    const encodedText = encodeURIComponent(postContent);
+    let targetIntentUrl = '';
+    
+    if (platformId === 'X') targetIntentUrl = `https://x.com{encodedText}`;
+    if (platformId === 'FB') targetIntentUrl = `https://facebook.com{encodedText}`;
+    if (platformId === 'TG') targetIntentUrl = `https://t.me{encodedText}`;
+    
+    if (targetIntentUrl) {
+        window.open(targetIntentUrl, '_blank');
+    }
+}
+
+// --- BATCH 10: VERSION 5 (V-5 SOCIAL NETWORK INTENT BROADCASTER) ---
+function copyAllSocialHandles() {
+    const defaultTags = "@Devilmycry666_Workspace #BuildInPublic #DeveloperTools";
+    navigator.clipboard.writeText(defaultTags);
+    alert("Project workspace identifier tags saved to clipboard:\n" + defaultTags);
+}
+
+function shareToPlatform(platformId) {
+    const textInput = document.getElementById('social-share-text');
+    if (!textInput) return;
+    
+    const postContent = textInput.value.trim();
+    if (!postContent) {
+        alert("Please enter a custom message update inside the textarea to share!");
+        return;
+    }
+    
+    const encodedText = encodeURIComponent(postContent);
+    let targetIntentUrl = '';
+    
+    if (platformId === 'X') targetIntentUrl = `https://x.com{encodedText}`;
+    if (platformId === 'FB') targetIntentUrl = `https://facebook.com{encodedText}`;
+    if (platformId === 'TG') targetIntentUrl = `https://t.me{encodedText}`;
+    
+    if (targetIntentUrl) {
+        window.open(targetIntentUrl, '_blank');
+    }
+}
