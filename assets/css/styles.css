@@ -137,3 +137,21 @@ button:hover { background: var(--neon-blue); color: #000; }
 
 .app-header { display: none; }
 .desktop-dimming-layer { display: none; }
+
+/* --- SCI-FI TRACKING BANNER ANIMATION LOOP --- */
+.global-ticker-banner {
+    overflow: hidden; /* Hide overflow text beyond screen edges */
+    white-space: nowrap;
+}
+
+.scrolling-ticker-text {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marqueeTickerScroll 25s linear infinite;
+    cursor: default;
+}
+
+@keyframes marqueeTickerScroll {
+    0%   { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+}
