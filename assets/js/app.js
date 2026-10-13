@@ -151,8 +151,39 @@ function calculateMetricsBMI() {
     if(w && h && pane) { pane.classList.remove('hidden'); pane.textContent = `Body BMI Metrics Matrix: ${(w / ((h/100)*(h/100))).toFixed(1)}`; }
 }
 
+// ₿ Asynchronous Live Crypto Network Telemetry Stream Channel
 async function updateCryptoMockChart() {
-    const map = { BTC: 'bitcoin', ETH: 'ethereum', SOL: 'solana' };
+    const assetMapping = { BTC: 'bitcoin', ETH: 'ethereum', SOL: 'solana' };
+    const assetSelector = document.getElementById('crypto-asset-select');
+    const livePriceDisplay = document.getElementById('crypto-live-price');
+    
+    if (!assetSelector || !livePriceDisplay) return;
+    
+    const activeAsset = assetSelector.value;
+    const targetApiIdentifier = assetMapping[activeAsset];
+    
+    livePriceDisplay.textContent = "CONNECTING FEED...";
+    livePriceDisplay.style.color = "var(--neon-muted)";
+
+    try {
+        // Dispatches authentic, raw telemetry queries straight to CoinGecko servers
+        const networkResponse = await fetch(`https://coingecko.com${targetApiIdentifier}&vs_currencies=usd`);
+        const structuralData = await networkResponse.json();
+        
+        if (structuralData[targetApiIdentifier] && structuralData[targetApiIdentifier].usd) {
+            const rawPrice = structuralData[targetApiIdentifier].usd;
+            livePriceDisplay.textContent = `${rawPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            livePriceDisplay.style.color = "var(--neon-green)";
+        } else {
+            livePriceDisplay.textContent = "FEED RETRY";
+            livePriceDisplay.style.color = "#ff4136";
+        }
+    } catch (networkError) {
+        console.error("Tactical telemetry broadcast failure:", networkError);
+        livePriceDisplay.textContent = "OFFLINE CACHE";
+        livePriceDisplay.style.color = "#ff4136";
+    }
+};
     const asset = document.getElementById('crypto-asset-select')?.value || 'BTC';
     const display = document.getElementById('crypto-live-price');
     if (!display) return;
@@ -533,4 +564,15 @@ document.addEventListener("DOMContentLoaded", () => {
         startLiveStockMarketDataStream();
         console.log("📡 Communications Hub and Live Market Data Loop channels are fully active!");
     }, 900);
+});
+
+// --- BATCH 13: CRYPTO CHANNEL LISTENER TRIGGER SWEEP ---
+document.addEventListener("DOMContentLoaded", () => {
+    const matrixDropdownSelect = document.getElementById("crypto-asset-select");
+    if (matrixDropdownSelect) {
+        matrixDropdownSelect.addEventListener("change", (e) => {
+            e.stopPropagation();
+            updateCryptoMockChart();
+        });
+    }
 });
