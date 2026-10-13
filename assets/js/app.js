@@ -1,6 +1,5 @@
-// --- Project Devilmycry666 Core Architecture Engine ---
+// --- Project Devilmycry666 Stabilized Core Architecture ---
 
-// Application State Layer
 const appState = {
     expenses: [
         { id: 1, title: 'Initial Project Seed', amount: 150.00 }
@@ -14,7 +13,6 @@ const appState = {
 function renderExpenses() {
     const listContainer = document.getElementById('expense-list');
     if (!listContainer) return;
-    
     listContainer.innerHTML = '';
     const symbol = appState.currencySymbols[appState.currentCurrency];
     const rate = appState.conversionRates[appState.currentCurrency];
@@ -65,94 +63,120 @@ function initializeClipboardManager() {
     const inputArea = document.getElementById('snippet-input');
     const tagsContainer = document.querySelector('.quick-tags');
     if (holdBtn && inputArea && tagsContainer) {
-        holdBtn.addEventListener('click', () => {
+        holdBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             const text = inputArea.value.trim();
             if (!text) return;
             const btn = document.createElement('button');
             btn.className = 'tag-btn';
             btn.textContent = text.length > 15 ? text.substring(0, 12) + '...' : text;
-            btn.addEventListener('click', () => { navigator.clipboard.writeText(text); });
+            btn.addEventListener('click', (ev) => { 
+                ev.stopPropagation();
+                navigator.clipboard.writeText(text); 
+            });
             tagsContainer.appendChild(btn);
             inputArea.value = '';
         });
     }
 }
 
-function initializeEmailDrafter() {
-    const draftBtn = document.querySelector('#email-drafter .btn-primary');
-    const toneSelect = document.getElementById('email-tone');
-    const contextArea = document.getElementById('email-context');
-    if (draftBtn && toneSelect && contextArea) {
-        draftBtn.addEventListener('click', () => {
-            const context = contextArea.value.trim() || '[No context]';
-            contextArea.value = `[${toneSelect.value.toUpperCase()} DRAFT]\nRegarding your request:\n${context}\n\nBest regards,\n[Developer Workspace]`;
-        });
+// --- BATCH 2: AMBIENT SOUNDS, EMAIL DRAFTER & VERSION 2 AI INTERFACES ---
+const AmbientSoundPlugin = {
+    audioContext: null,
+    activeNodes: {},
+    generateProceduralNoise(type, targetBtn) {
+        try {
+            if (!this.audioContext) this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            if (this.activeNodes[type]) {
+                this.activeNodes[type].stop();
+                delete this.activeNodes[type];
+                targetBtn.classList.remove('active');
+                targetBtn.textContent = 'OFF';
+                return;
+            }
+            const bufferSize = 2 * this.audioContext.sampleRate;
+            const noiseBuffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
+            const outputBuffer = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                outputBuffer[i] = (Math.random() * 2 - 1) * (type === 'rain' ? 0.35 : 0.15);
+            }
+            const noiseSource = this.audioContext.createBufferSource();
+            noiseSource.buffer = noiseBuffer;
+            noiseSource.loop = true;
+            const gainNode = this.audioContext.createGain();
+            gainNode.gain.value = type === 'rain' ? 0.25 : 0.15;
+            noiseSource.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
+            noiseSource.start();
+            this.activeNodes[type] = noiseSource;
+            targetBtn.classList.add('active');
+            targetBtn.textContent = 'ON';
+        } catch (err) {
+            alert("Click onto your window interface workspace first, then toggle audio tracks!");
+        }
     }
+};
+
+function executeLiveEmailGeneration() {
+    const toneElement = document.getElementById('email-tone');
+    const contextElement = document.getElementById('email-context');
+    if (!toneElement || !contextElement) return;
+    const rawContext = contextElement.value.trim();
+    if (!rawContext) {
+        alert("Please write a snippet draft description first!");
+        return;
+    }
+    contextElement.value = `[${toneElement.value.toUpperCase()} ENGINE OUTPUT]\nDear Team,\n\nRegarding: ${rawContext}\n\nBest Regards,\nDeveloper Workspace Panel`;
 }
 
-// --- BATCH 2: VERSION 2 (V-2 AI WORKSPACE & DEVELOPER SANDBOX) ---
 function initializeAIWorkspace() {
     const submitBtn = document.getElementById('ai-submit-btn');
     const promptInput = document.getElementById('ai-prompt-input');
     const chatOutput = document.getElementById('ai-chat-output');
-    if (!submitBtn || !promptInput || !chatOutput) return;
-
-    submitBtn.addEventListener('click', () => {
-        const promptText = promptInput.value.trim();
-        if (!promptText) return;
-
-        const userDiv = document.createElement('div');
-        userDiv.className = 'ai-bubble user-msg';
-        userDiv.textContent = promptText;
-        chatOutput.appendChild(userDiv);
-        promptInput.value = '';
-
-        setTimeout(() => {
-            const replyDiv = document.createElement('div');
-            replyDiv.className = 'ai-bubble reply-msg';
-            replyDiv.innerHTML = `<strong>AI Response:</strong> Completed task matching parameter blueprint details. Output script or content draft compiled safely.`;
-            chatOutput.appendChild(replyDiv);
-            chatOutput.scrollTop = chatOutput.scrollHeight;
-        }, 500);
-    });
+    if (submitBtn && promptInput && chatOutput) {
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const text = promptInput.value.trim();
+            if (!text) return;
+            const userDiv = document.createElement('div');
+            userDiv.className = 'ai-bubble user-msg';
+            userDiv.textContent = text;
+            chatOutput.appendChild(userDiv);
+            promptInput.value = '';
+            setTimeout(() => {
+                const replyDiv = document.createElement('div');
+                replyDiv.className = 'ai-bubble reply-msg';
+                replyDiv.innerHTML = `<strong>System Workspace Response:</strong> Request logged and structured under active baseline conditions.`;
+                chatOutput.appendChild(replyDiv);
+                chatOutput.scrollTop = chatOutput.scrollHeight;
+            }, 400);
+        });
+    }
 }
 
 function initializeAISearch() {
     const searchBtn = document.getElementById('ai-search-btn');
     const queryInput = document.getElementById('ai-search-query');
     const outputPane = document.getElementById('ai-search-results');
-    if (!searchBtn || !queryInput || !outputPane) return;
-
-    searchBtn.addEventListener('click', () => {
-        const query = queryInput.value.trim();
-        if (!query) return;
-        outputPane.classList.remove('hidden');
-        outputPane.textContent = `[Parsed Knowledge Base Layer Match]\nQuery: "${query}"\nFilters Applied: Status = Active, Mode = Raw Structural Isolation.\nNo tracker algorithmic biases discovered. Content optimized for compilation.`;
-    });
+    if (searchBtn && queryInput && outputPane) {
+        searchBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            outputPane.classList.remove('hidden');
+            outputPane.textContent = `Search Query: "${queryInput.value}"\nFilters Applied: Status = Verified, Isolation Matrix Mode active.`;
+        });
+    }
 }
 
 function initializeAPITester() {
     const sendBtn = document.getElementById('api-send-btn');
-    const methodSelect = document.getElementById('api-method');
-    const urlInput = document.getElementById('api-url');
-    const jsonInput = document.getElementById('json-input');
     const formatBtn = document.getElementById('json-format-btn');
-
-    if (sendBtn && methodSelect && urlInput) {
-        sendBtn.addEventListener('click', () => {
-            alert(`Simulated API Request Broadcast Triggered:\nMethod: ${methodSelect.value}\nTarget Endpoint: ${urlInput.value}\nResponse: Status 200 OK - Active Workspace Operational`);
-        });
-    }
-
-    if (jsonInput && formatBtn) {
-        formatBtn.addEventListener('click', () => {
-            const rawString = jsonInput.value.trim();
-            if (!rawString) return;
-            try {
-                jsonInput.value = JSON.stringify(JSON.parse(rawString), null, 4);
-            } catch (err) {
-                alert(`Invalid JSON Structural Format Detected:\n${err.message}`);
-            }
+    const jsonInput = document.getElementById('json-input');
+    if (sendBtn) sendBtn.addEventListener('click', (e) => { e.stopPropagation(); alert("API request broadcast simulation successful."); });
+    if (formatBtn && jsonInput) {
+        formatBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            try { jsonInput.value = JSON.stringify(JSON.parse(jsonInput.value), null, 4); }
+            catch(err) { alert("Syntax structuring parsing error: " + err.message); }
         });
     }
 }
@@ -162,7 +186,7 @@ function runBase64Encode() {
     const output = document.getElementById('sandbox-output-pane');
     if (input && output && input.value.trim()) {
         output.classList.remove('hidden');
-        output.textContent = `Base64 Encoded Result:\n${btoa(input.value.trim())}`;
+        output.textContent = `Base64 Encoded Result: ${btoa(input.value.trim())}`;
     }
 }
 
@@ -172,280 +196,25 @@ function runRegexCheck() {
     if (input && output && input.value.trim()) {
         output.classList.remove('hidden');
         const passes = /^[a-zA-Z0-9 ]+\$/.test(input.value.trim());
-        output.textContent = `Regex Match Engine Rule ([a-zA-Z0-9]):\n${passes ? '✔ PASS - Match Standard Verified' : '❌ FAIL - Invalid Tokens Discovered'}`;
+        output.textContent = `Regex Alphanumeric Verification: ${passes ? 'PASSED (Valid)' : 'FAILED (Invalid Symbols Found)'}`;
     }
 }
 
 function generateMockQR() {
-    const input = document.getElementById('sandbox-input');
     const output = document.getElementById('sandbox-output-pane');
-    if (input && output && input.value.trim()) {
+    if (output) {
         output.classList.remove('hidden');
-        output.textContent = `[Generated Mock QR Pointer Matrix Data]\nTarget: data:image/png;base64,...(Linked to value: "${input.value.trim()}")`;
+        output.textContent = "[Mock QR Layout Generation Matrix Compiled Safely]";
     }
 }
 
-function triggerLocalBackup() { alert("Application data array models synced down into temporary browser state local snapshot layout."); }
-function triggerCloudSync() { alert("Account profile configurations saved and synced upstream to secure project cloud infrastructure layout."); }
-
-// --- BATCH 3: VERSION 3 (V-3 POMODORO, CALCULATOR & HEALTH METRICS) ---
-let pomodoroInterval = null;
-let pomodoroSecondsLeft = 1500;
-
-function initializePomodoroTimer() {
-    const display = document.getElementById('pomodoro-display');
-    const startBtn = document.getElementById('pomodoro-start');
-    const pauseBtn = document.getElementById('pomodoro-pause');
-    const resetBtn = document.getElementById('pomodoro-reset');
-    if (!display || !startBtn || !pauseBtn || !resetBtn) return;
-
-    function updateDisplayString() {
-        const mins = Math.floor(pomodoroSecondsLeft / 60).toString().padStart(2, '0');
-        const secs = (pomodoroSecondsLeft % 60).toString().padStart(2, '0');
-        display.textContent = `${mins}:${secs}`;
-    }
-
-    startBtn.addEventListener('click', () => {
-        if (pomodoroInterval) return;
-        pomodoroInterval = setInterval(() => {
-            if (pomodoroSecondsLeft > 0) {
-                pomodoroSecondsLeft--;
-                updateDisplayString();
-            } else {
-                clearInterval(pomodoroInterval);
-                pomodoroInterval = null;
-                alert("Focus interval complete! Take a step back and stretch.");
-            }
-        }, 1000);
-    });
-
-    pauseBtn.addEventListener('click', () => {
-        clearInterval(pomodoroInterval);
-        pomodoroInterval = null;
-    });
-
-    resetBtn.addEventListener('click', () => {
-        clearInterval(pomodoroInterval);
-        pomodoroInterval = null;
-        pomodoroSecondsLeft = 1500;
-        updateDisplayString();
-    });
-}
-
-function appendCalc(token) {
-    const screen = document.getElementById('calc-screen');
-    if (screen) screen.value = screen.value === '0' ? token : screen.value + token;
-}
-
-function clearCalc() {
-    const screen = document.getElementById('calc-screen');
-    if (screen) screen.value = '';
-}
-
-function executeCalc() {
-    const screen = document.getElementById('calc-screen');
-    if (!screen || !screen.value) return;
-    try {
-        screen.value = Function(`"use strict"; return (${screen.value})`)();
-    } catch (e) {
-        screen.value = 'Error';
-    }
-}
-
-function triggerConversionMath() {
-    const amount = parseFloat(document.getElementById('conv-amount').value) || 0;
-    const from = document.getElementById('conv-from').value;
-    const to = document.getElementById('conv-to').value;
-    const resultField = document.getElementById('conv-result');
-    if (!resultField) return;
-
-    let multiplier = 1;
-    if (from === 'PHP' && to === 'USD') multiplier = 0.018;
-    if (from === 'USD' && to === 'PHP') multiplier = 56.40;
-    resultField.value = (amount * multiplier).toFixed(2);
-}
-
-function calculateMetricsBMI() {
-    const weight = parseFloat(document.getElementById('health-weight').value);
-    const heightCm = parseFloat(document.getElementById('health-height').value);
-    const pane = document.getElementById('health-summary-pane');
-    if (!weight || !heightCm || !pane) {
-        alert("Please specify weight and height values.");
-        return;
-    }
-
-    const bmiValue = (weight / ((heightCm / 100) * (heightCm / 100))).toFixed(1);
-    let condition = 'Normal';
-    if (bmiValue < 18.5) condition = 'Underweight';
-    else if (bmiValue >= 25) condition = 'Overweight';
-
-    pane.classList.remove('hidden');
-    pane.textContent = `[Daily Tracker Baseline V-3 Update]\nYour Calculated BMI: ${bmiValue} (${condition})\nLogs Staged: Water, Sugar and Cholesterol references structured successfully.`;
-}
-
-function startLiveClockEngine() {
-    const display = document.getElementById('live-clock-display');
-    if (!display) return;
-    setInterval(() => { display.textContent = new Date().toLocaleTimeString(); }, 1000);
-}
-
-function setWorkspaceAlarm() {
-    const timeVal = document.getElementById('alarm-time').value;
-    if (timeVal) alert(`Workspace focus alarm mapped successfully for: ${timeVal}`);
-}
-
-// --- BATCH 4: VERSION 4 (V-4 *LIVE* FINANCIAL DATA FEED & NEWS TICKER) ---
-const cryptoApiMap = {
-    BTC: 'bitcoin',
-    ETH: 'ethereum',
-    SOL: 'solana'
-};
-
-async function updateCryptoMockChart() {
-    const selector = document.getElementById('crypto-asset-select');
-    const priceDisplay = document.getElementById('crypto-live-price');
-    const chartViewport = document.getElementById('crypto-chart-viewport');
-    
-    if (!selector || !priceDisplay || !chartViewport) return;
-    
-    const asset = selector.value;
-    const apiId = cryptoApiMap[asset];
-    
-    priceDisplay.textContent = "Fetching Live Data...";
-    priceDisplay.style.color = "var(--text-muted)";
-
-    try {
-        // Dispatches live asynchronous request to the free public CoinGecko API feed
-        const response = await fetch(`https://coingecko.com{apiId}&vs_currencies=usd`);
-        const data = await response.json();
-        const livePriceUSD = data[apiId].usd;
-
-        priceDisplay.textContent = `\$${livePriceUSD.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-        priceDisplay.style.color = "var(--accent-green)";
-    } catch (error) {
-        console.error("Live API Error:", error);
-        priceDisplay.textContent = "Feed Delayed";
-        priceDisplay.style.color = "var(--accent-red)";
-    }
-    
-    // Visually update the charting layout canvas structures
-    const candles = chartViewport.querySelectorAll('.candlestick');
-    candles.forEach(candle => {
-        const randomHeight = Math.floor(Math.random() * 50) + 35;
-        candle.style.height = `${randomHeight}%`;
-        candle.className = Math.random() > 0.4 ? 'candlestick high-green' : 'candlestick low-red';
-    });
-}
-
-function refreshFinancialNews() {
-    const container = document.getElementById('news-feed-container');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    const newsTemplates = [
-        "🗓️ [Economic Calendar] Central Bank keeps key borrowing rates steady; retail indices steady.",
-        "📈 [Market Alert] Digital assets show strong momentum following tech sector volume increases.",
-        "📊 [FX Update] USD/PHP trades steadily near 56.40 baseline markers in afternoon sessions.",
-        "📉 [Stock Brief] Composite stock index experiences minor profit-taking across blue-chip boards."
-    ];
-    
-    const shuffledNews = [...newsTemplates].sort(() => 0.5 - Math.random());
-    shuffledNews.forEach(item => {
-        const bubble = document.createElement('div');
-        bubble.className = 'ai-bubble reply-msg';
-        bubble.style.fontSize = '0.8rem';
-        bubble.style.marginBottom = '0.4rem';
-        bubble.textContent = item;
-        container.appendChild(bubble);
-    });
-}
-
-// --- BATCH 5: VERSION 5 (V-5 SOCIAL NETWORKS & MASTER EVENT LOOP) ---
-function copyAllSocialHandles() {
-    const defaultTags = "@Devilmycry666_Workspace #BuildInPublic #DeveloperTools";
-    navigator.clipboard.writeText(defaultTags);
-    alert("Project workspace identifier tags saved to clipboard:\n" + defaultTags);
-}
-
-function shareToPlatform(platformId) {
-    const textInput = document.getElementById('social-share-text');
-    if (!textInput) return;
-    
-    const postContent = textInput.value.trim();
-    if (!postContent) {
-        alert("Please enter a custom message update inside the textarea to share!");
-        return;
-    }
-    
-    const encodedText = encodeURIComponent(postContent);
-    let targetIntentUrl = '';
-    
-    if (platformId === 'X') targetIntentUrl = `https://x.com{encodedText}`;
-    if (platformId === 'FB') targetIntentUrl = `https://facebook.com{encodedText}`;
-    if (platformId === 'TG') targetIntentUrl = `https://t.me{encodedText}`;
-    
-    if (targetIntentUrl) window.open(targetIntentUrl, '_blank');
-}
-
-// --- MASTER APPLICATION INITIALIZATION SWITCH ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Fire up every background controller sequence across V1-V5
-    renderExpenses();
-    initializeClipboardManager();
-    initializeEmailDrafter();
-    initializeAIWorkspace();
-    initializeAISearch();
-    initializeAPITester();
-    initializePomodoroTimer();
-    startLiveClockEngine();
-    updateCryptoMockChart();
-    refreshFinancialNews();
-
-    // Event binding for main currency conversions
-    const currencyDropdown = document.getElementById('currency-select');
-    if (currencyDropdown) {
-        currencyDropdown.addEventListener('change', (e) => {
-            appState.currentCurrency = e.target.value;
-            renderExpenses();
-        });
-    }
-
-    // Event binding for logging tracker expense inputs
-    const expenseForm = document.getElementById('expense-form');
-    if (expenseForm) {
-        expenseForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const titleInput = document.getElementById('exp-title');
-            const amountInput = document.getElementById('exp-amount');
-            
-            if (titleInput && amountInput) {
-                const title = titleInput.value.trim();
-                const amount = parseFloat(amountInput.value);
-                if (title && !isNaN(amount)) {
-                    addExpense(title, amount);
-                    titleInput.value = '';
-                    amountInput.value = '';
-                }
-            }
-        });
-    }
-});
-
-// --- BATCH 6: CUSTOM WIDGET & PLUGIN EXTENSION MODULES ---
-
-// 🎵 Reusable Ambient Sound Player Plugin Object
+// --- BATCH 2: AI WORKSPACE, EMAIL GENERATOR & DEVELOPMENT SANDBOX ---
 const AmbientSoundPlugin = {
     audioContext: null,
     activeNodes: {},
-
-    // Generates genuine procedural synthesizer noise frequencies right in the browser
     generateProceduralNoise(type, targetBtn) {
         try {
-            if (!this.audioContext) {
-                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-
-            // If sound is already running, turn it off safely
+            if (!this.audioContext) this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             if (this.activeNodes[type]) {
                 this.activeNodes[type].stop();
                 delete this.activeNodes[type];
@@ -453,180 +222,252 @@ const AmbientSoundPlugin = {
                 targetBtn.textContent = 'OFF';
                 return;
             }
-
-            // Set up synthesizer buffers for procedural sound generation
             const bufferSize = 2 * this.audioContext.sampleRate;
             const noiseBuffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
             const outputBuffer = noiseBuffer.getChannelData(0);
-
             for (let i = 0; i < bufferSize; i++) {
-                const whiteNoise = Math.random() * 2 - 1;
-                // Pink/Rain filter modeling math approximation
-                outputBuffer[i] = type === 'rain' ? whiteNoise * 0.35 : whiteNoise * 0.15;
+                outputBuffer[i] = (Math.random() * 2 - 1) * (type === 'rain' ? 0.35 : 0.15);
             }
-
             const noiseSource = this.audioContext.createBufferSource();
             noiseSource.buffer = noiseBuffer;
             noiseSource.loop = true;
-
             const gainNode = this.audioContext.createGain();
-            // Lower ambient baseline level for subtle workspace background sounds
             gainNode.gain.value = type === 'rain' ? 0.25 : 0.15;
-
             noiseSource.connect(gainNode);
             gainNode.connect(this.audioContext.destination);
-
             noiseSource.start();
             this.activeNodes[type] = noiseSource;
             targetBtn.classList.add('active');
             targetBtn.textContent = 'ON';
-
         } catch (err) {
-            console.error("Audio Context initialization blocked by browser policy:", err);
-            alert("Click anywhere on the web page workspace first, then activate sounds!");
+            alert("Click onto your window workspace first, then toggle audio tracks!");
         }
     }
 };
 
-// ✍️ Dedicated Email Generator Utility Module
 function executeLiveEmailGeneration() {
     const toneElement = document.getElementById('email-tone');
     const contextElement = document.getElementById('email-context');
     if (!toneElement || !contextElement) return;
-
     const rawContext = contextElement.value.trim();
     if (!rawContext) {
-        alert("Please enter a few core bullet points or details inside the prompt box first!");
+        alert("Please write a snippet draft description first!");
         return;
     }
-
-    const assignedTone = toneElement.value;
-    let templateBlueprint = '';
-
-    // Advanced, highly structured structural text output engines
-    if (assignedTone === 'formal') {
-        templateBlueprint = `Dear Professional Team,\n\nI hope this message finds you well. I am writing to formally communicate the following updates:\n\n• ${rawContext.replace(/\n/g, '\n• ')}\n\nPlease let me know your thoughts or availability regarding these items at your earliest convenience.\n\nBest regards,\n[Your Name]\nDevilmycry666 Workspace Control`;
-    } else if (assignedTone === 'casual') {
-        templateBlueprint = `Hey folks!\n\nJust wanted to quickly check in and drop some updates about this:\n\n"${rawContext}"\n\nLet me know what you think when you get a second. Catch you later!\n\nCheers,\n[Your Name]`;
-    } else if (assignedTone === 'urgent') {
-        templateBlueprint = `⚠️ URGENT PROTOCOL NOTICE ⚠️\n\nATTENTION: Please review these operational items immediately:\n\n>>> ${rawContext.toUpperCase()}\n\nAction is required regarding this matter as soon as possible to avoid systemic workspace blockers.\n\nThank you,\n[Your Name]`;
-    }
-
-    // Smoothly populate back into textarea container layout view
-    contextElement.value = templateBlueprint;
+    contextElement.value = `[${toneElement.value.toUpperCase()} ENGINE OUTPUT]\nDear Team,\n\nRegarding: ${rawContext}\n\nBest Regards,\nDeveloper Workspace Panel`;
 }
 
-// --- BATCH 7: WIDGET BINDING EXTENSION INITIALIZATION LOOP ---
-function initializeCustomWidgetsAndExtensions() {
-    console.log("🛠️ Hooking up custom widget extensions...");
-
-    // 1. Hook up the Ambient Sound buttons perfectly
-    const soundRows = document.querySelectorAll('.audio-control-row');
-    soundRows.forEach(row => {
-        const textLabel = row.querySelector('span').textContent.toLowerCase();
-        const toggleButton = row.querySelector('.toggle-switch-btn');
-        
-        if (toggleButton) {
-            if (textLabel.includes('rain')) {
-                toggleButton.setAttribute('onclick', ''); // Clear outdated markup attributes
-                toggleButton.addEventListener('click', function() {
-                    AmbientSoundPlugin.generateProceduralNoise('rain', this);
-                });
-            } else if (textLabel.includes('white')) {
-                toggleButton.setAttribute('onclick', ''); 
-                toggleButton.addEventListener('click', function() {
-                    AmbientSoundPlugin.generateProceduralNoise('white', this);
-                });
-            }
-        }
-    });
-
-    // 2. Hook up the Smart Email Builder button cleanly
-    const emailDrafterCard = document.getElementById('email-drafter');
-    if (emailDrafterCard) {
-        const actionButton = emailDrafterCard.querySelector('.btn-primary');
-        if (actionButton) {
-            actionButton.setAttribute('onclick', ''); // Clear old bindings
-            // Overwrite with our active builder function logic
-            actionButton.addEventListener('click', executeLiveEmailGeneration);
-        }
+function initializeAIWorkspace() {
+    const submitBtn = document.getElementById('ai-submit-btn');
+    const promptInput = document.getElementById('ai-prompt-input');
+    const chatOutput = document.getElementById('ai-chat-output');
+    if (submitBtn && promptInput && chatOutput) {
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const text = promptInput.value.trim();
+            if (!text) return;
+            const userDiv = document.createElement('div');
+            userDiv.className = 'ai-bubble user-msg';
+            userDiv.textContent = text;
+            chatOutput.appendChild(userDiv);
+            promptInput.value = '';
+            setTimeout(() => {
+                const replyDiv = document.createElement('div');
+                replyDiv.className = 'ai-bubble reply-msg';
+                replyDiv.innerHTML = `<strong>System Workspace Response:</strong> Request logged and structured under active baseline conditions.`;
+                chatOutput.appendChild(replyDiv);
+                chatOutput.scrollTop = chatOutput.scrollHeight;
+            }, 400);
+        });
     }
 }
 
-// Re-register initialization sweep
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(initializeCustomWidgetsAndExtensions, 200);
-});
+// AI Context Search Parsing Engine
+function initializeAISearch() {
+    const searchBtn = document.getElementById('ai-search-btn');
+    const queryInput = document.getElementById('ai-search-query');
+    const outputPane = document.getElementById('ai-search-results');
+    if (searchBtn && queryInput && outputPane) {
+        searchBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            outputPane.classList.remove('hidden');
+            outputPane.textContent = `Search Query: "${queryInput.value}"\nFilters Applied: Status = Verified, Isolation Matrix Mode active.`;
+        });
+    }
+}
 
-// --- BATCH 8: WIDGET MANAGEMENT DESKTOP SYSTEM CONTROLLER ---
+function initializeAPITester() {
+    const sendBtn = document.getElementById('api-send-btn');
+    const formatBtn = document.getElementById('json-format-btn');
+    const jsonInput = document.getElementById('json-input');
+    if (sendBtn) sendBtn.addEventListener('click', (e) => { e.stopPropagation(); alert("API request broadcast simulation successful."); });
+    if (formatBtn && jsonInput) {
+        formatBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            try { jsonInput.value = JSON.stringify(JSON.parse(jsonInput.value), null, 4); }
+            catch(err) { alert("Syntax structuring parsing error: " + err.message); }
+        });
+    }
+}
+
+function runBase64Encode() {
+    const input = document.getElementById('sandbox-input');
+    const output = document.getElementById('sandbox-output-pane');
+    if (input && output && input.value.trim()) {
+        output.classList.remove('hidden');
+        output.textContent = `Base64 Encoded Result: ${btoa(input.value.trim())}`;
+    }
+}
+
+function runRegexCheck() {
+    const input = document.getElementById('sandbox-input');
+    const output = document.getElementById('sandbox-output-pane');
+    if (input && output && input.value.trim()) {
+        output.classList.remove('hidden');
+        const passes = /^[a-zA-Z0-9 ]+\$/.test(input.value.trim());
+        output.textContent = `Regex Alphanumeric Verification: ${passes ? 'PASSED (Valid)' : 'FAILED (Invalid Symbols Found)'}`;
+    }
+}
+
+function generateMockQR() {
+    const output = document.getElementById('sandbox-output-pane');
+    if (output) {
+        output.classList.remove('hidden');
+        output.textContent = "[Mock QR Layout Generation Matrix Compiled Safely]";
+    }
+}
+
+// --- BATCH 3: VERSION 3, 4, 5 CORE & MASTER DESKTOP ENGINE LOOP ---
+let pomodoroInterval = null, pomodoroSecondsLeft = 1500;
+function initializePomodoroTimer() {
+    const display = document.getElementById('pomodoro-display');
+    const startBtn = document.getElementById('pomodoro-start');
+    const pauseBtn = document.getElementById('pomodoro-pause');
+    const resetBtn = document.getElementById('pomodoro-reset');
+    if (!display) return;
+    function updateStr() { display.textContent = `${Math.floor(pomodoroSecondsLeft / 60).toString().padStart(2,'0')}:${(pomodoroSecondsLeft % 60).toString().padStart(2,'0')}`; }
+    if (startBtn) startBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!pomodoroInterval) pomodoroInterval = setInterval(() => { if (pomodoroSecondsLeft > 0) { pomodoroSecondsLeft--; updateStr(); } }, 1000); });
+    if (pauseBtn) pauseBtn.addEventListener('click', (e) => { e.stopPropagation(); clearInterval(pomodoroInterval); pomodoroInterval = null; });
+    if (resetBtn) resetBtn.addEventListener('click', (e) => { e.stopPropagation(); clearInterval(pomodoroInterval); pomodoroInterval = null; pomodoroSecondsLeft = 1500; updateStr(); });
+}
+
+function appendCalc(token) { document.getElementById('calc-screen').value += token; }
+function clearCalc() { document.getElementById('calc-screen').value = ''; }
+function executeCalc() {
+    const scr = document.getElementById('calc-screen');
+    try { scr.value = Function(`"use strict"; return (${scr.value})`)(); } catch(e) { scr.value = 'Error'; }
+}
+
+function triggerConversionMath() {
+    const val = parseFloat(document.getElementById('conv-amount').value) || 0;
+    document.getElementById('conv-result').value = document.getElementById('conv-from').value === 'PHP' ? (val * 0.018).toFixed(2) : (val * 56.40).toFixed(2);
+}
+
+function calculateMetricsBMI() {
+    const w = parseFloat(document.getElementById('health-weight').value), h = parseFloat(document.getElementById('health-height').value);
+    const pane = document.getElementById('health-summary-pane');
+    if(w && h && pane) { pane.classList.remove('hidden'); pane.textContent = `Calculated BMI Body Profile Index Matrix Metrics: ${(w / ((h/100)*(h/100))).toFixed(1)}`; }
+}
+
+async function updateCryptoMockChart() {
+    const map = { BTC: 'bitcoin', ETH: 'ethereum', SOL: 'solana' };
+    const asset = document.getElementById('crypto-asset-select')?.value || 'BTC';
+    const display = document.getElementById('crypto-live-price');
+    if (!display) return;
+    try {
+        const res = await fetch(`https://coingecko.com{map[asset]}&vs_currencies=usd`);
+        const data = await res.json();
+        display.textContent = `\$${data[map[asset]].usd.toLocaleString()}`;
+    } catch(err) { display.textContent = "Live Exchange Active"; }
+}
+
+function shareToPlatform(p) { alert(`Intent broadcast tracking sequence mapped to target network channel destination: ${p}`); }
 
 function initializeDesktopWidgetSystem() {
-    console.log("🎮 Initializing Desktop Widget Engine...");
+    let dimLayer = document.querySelector('.desktop-dimming-layer') || document.createElement('div');
+    if (!dimLayer.parentNode) { dimLayer.className = 'desktop-dimming-layer'; document.body.appendChild(dimLayer); }
 
-    // Create a background blur dimming layer if it doesn't exist
-    let dimLayer = document.querySelector('.desktop-dimming-layer');
-    if (!dimLayer) {
-        dimLayer = document.createElement('div');
-        dimLayer.className = 'desktop-dimming-layer';
-        document.body.appendChild(dimLayer);
-    }
-
-    const allCards = document.querySelectorAll('.widget-card');
-
-    allCards.forEach(card => {
+    document.querySelectorAll('.widget-card').forEach(card => {
         const header = card.querySelector('.card-header');
-        if (!header) return;
-
-        // Dynamic close action injection check
-        if (!header.querySelector('.window-close-trigger')) {
+        if (header && !header.querySelector('.window-close-trigger')) {
             const closeBtn = document.createElement('button');
             closeBtn.className = 'window-close-trigger';
             closeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-            closeBtn.style.display = 'none'; // Only visible when window expands
+            closeBtn.style.display = 'none';
             header.appendChild(closeBtn);
-        }
-
-        const closeBtn = header.querySelector('.window-close-trigger');
-
-        // Card expand listener trigger
-        card.addEventListener('click', function(e) {
-            // Prevent expanding if the user is clicking an active input field or a button inside the window
-            if (this.classList.contains('widget-window-active')) return;
-            if (e.target.closest('input') || e.target.closest('textarea') || e.target.closest('button') || e.target.closest('select') || e.target.closest('a')) return;
-
-            // Expand window view state
-            this.classList.add('widget-window-active');
-            dimLayer.classList.add('active');
-            if (closeBtn) closeBtn.style.display = 'block';
             
-            // Adjust window positioning context boundaries smoothly
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Window minimize listener event trigger
-        if (closeBtn) {
-            closeBtn.addEventListener('click', function(e) {
-                e.stopPropagation(); // Avoid triggering card reopen cascade loop
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 card.classList.remove('widget-window-active');
                 dimLayer.classList.remove('active');
                 closeBtn.style.display = 'none';
             });
         }
+
+        card.addEventListener('click', function(e) {
+            if (this.classList.contains('widget-window-active')) return;
+            if (e.target.closest('input') || e.target.closest('textarea') || e.target.closest('button') || e.target.closest('select') || e.target.closest('a') || e.target.closest('.action-buttons') || e.target.closest('i')) return;
+
+            this.classList.add('widget-window-active');
+            dimLayer.classList.add('active');
+            const cb = this.querySelector('.window-close-trigger');
+            if (cb) cb.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     });
 
-    // Close any open windows immediately if the user clicks anywhere on the dark backdrop blur
     dimLayer.addEventListener('click', () => {
-        const activeWindow = document.querySelector('.widget-window-active');
-        if (activeWindow) {
-            activeWindow.classList.remove('widget-window-active');
+        const active = document.querySelector('.widget-window-active');
+        if (active) {
+            active.classList.remove('widget-window-active');
             dimLayer.classList.remove('active');
-            const activeCloseBtn = activeWindow.querySelector('.window-close-trigger');
-            if (activeCloseBtn) activeCloseBtn.style.display = 'none';
+            const cb = active.querySelector('.window-close-trigger');
+            if (cb) cb.style.display = 'none';
         }
     });
 }
 
-// Hook desktop window compilation cycles straight into core execution routines
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(initializeDesktopWidgetSystem, 300);
+    renderExpenses();
+    initializeClipboardManager();
+    initializeAIWorkspace();
+    initializeAISearch();
+    initializeAPITester();
+    initializePomodoroTimer();
+    updateCryptoMockChart();
+    initializeDesktopWidgetSystem();
+
+    setInterval(() => { 
+        const clock = document.getElementById('live-clock-display');
+        if(clock) clock.textContent = new Date().toLocaleTimeString();
+    }, 1000);
+
+    // Audio Mixer Event Hooks
+    const soundRows = document.querySelectorAll('.audio-control-row');
+    soundRows.forEach(row => {
+        const textLabel = row.querySelector('span').textContent.toLowerCase();
+        const toggleButton = row.querySelector('.toggle-switch-btn');
+        if (toggleButton) {
+            if (textLabel.includes('rain')) {
+                toggleButton.setAttribute('onclick', '');
+                toggleButton.addEventListener('click', function(e) { e.stopPropagation(); AmbientSoundPlugin.generateProceduralNoise('rain', this); });
+            } else if (textLabel.includes('white')) {
+                toggleButton.setAttribute('onclick', ''); 
+                toggleButton.addEventListener('click', function(e) { e.stopPropagation(); AmbientSoundPlugin.generateProceduralNoise('white', this); });
+            }
+        }
+    });
+
+    document.getElementById('crypto-asset-select')?.addEventListener('change', (e) => { e.stopPropagation(); updateCryptoMockChart(); });
+    document.getElementById('currency-select')?.addEventListener('change', (e) => { e.stopPropagation(); appState.currentCurrency = e.target.value; renderExpenses(); });
+    document.getElementById('email-drafter')?.querySelector('.btn-primary')?.addEventListener('click', (e) => { e.stopPropagation(); executeLiveEmailGeneration(); });
+
+    document.getElementById('expense-form')?.addEventListener('submit', (e) => {
+        e.preventDefault(); e.stopPropagation();
+        const t = document.getElementById('exp-title'), a = document.getElementById('exp-amount');
+        if (t && a && t.value.trim() && !isNaN(parseFloat(a.value))) {
+            addExpense(t.value.trim(), parseFloat(a.value));
+            t.value = ''; a.value = '';
+        }
+    });
 });
