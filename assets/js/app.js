@@ -445,3 +445,13 @@ function shareToPlatform(platformId) {
         window.open(targetIntentUrl, '_blank');
     }
 }
+
+// --- RE-INITIALIZE DESKTOP EVENTS FOR VERSION 5 PANELS ---
+document.addEventListener("DOMContentLoaded", () => {
+    // Run an additional minor delay sweep to bind dynamically injected cards
+    setTimeout(() => {
+        if (typeof initializeDesktopWidgetSystem === "function") {
+            initializeDesktopWidgetSystem();
+        }
+    }, 800);
+});
