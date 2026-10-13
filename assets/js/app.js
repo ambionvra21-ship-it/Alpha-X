@@ -455,3 +455,82 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 800);
 });
+
+// --- BATCH 11: COMMUNICATIONS HUB INTERACTION & MARKET DATA LOOP ---
+
+function initializeCommunicationsHub() {
+    const hubCard = document.getElementById("email-drafter");
+    if (!hubCard) return;
+
+    const generateBtn = hubCard.querySelector(".btn-primary");
+    const toneSelect = document.getElementById("email-tone");
+    const contextTextArea = document.getElementById("email-context");
+
+    if (generateBtn && toneSelect && contextTextArea) {
+        // Clear any previous inline event listeners to ensure clean execution
+        generateBtn.setAttribute("onclick", "");
+        
+        generateBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const rawText = contextTextArea.value.trim();
+            if (!rawText) {
+                alert("Please type a project update or request prompt into the context input first!");
+                return;
+            }
+
+            const tone = toneSelect.value;
+            let formattedDraft = "";
+
+            // Advanced template structure compiler matching tactical workspace logs
+            if (tone === "formal") {
+                formattedDraft = `DEAR TEAM,\n\nREGARDING PROJECT PROTOCOLS, PLEASE REVIEW THE FOLLOWING DETAILED SUMMARY:\n\n• ${rawText.replace(/\n/g, "\n• ")}\n\nKINDLY CONFIRM RECIPIENT ACCESSIBILITY AND TRANSMIT FEEDBACK AT YOUR EARLIEST CONVENIENCE.\n\nBEST REGARDS,\n[DEVILMYCRY666 OS WORKSPACE CONTROL]`;
+            } else {
+                formattedDraft = `Hey folks!\n\nQuick heads up regarding our recent project updates:\n\n"${rawText}"\n\nLet me know your thoughts or ping me back whenever you're free!\n\nCheers,\n[Workspace Panel]`;
+            }
+
+            // Inject the compiled text layout straight back into the communication viewport
+            contextTextArea.value = formattedDraft;
+        });
+    }
+}
+
+// 📈 Live Telemetry Loop Framework for Stock Indices
+function startLiveStockMarketDataStream() {
+    const pseiDisplay = document.getElementById("stock-psei");
+    const spyDisplay = document.getElementById("stock-spy");
+
+    // Dynamic update frequency tick runner loop
+    setInterval(() => {
+        // Mock subtle market data stream fluctuations (0.1% - 0.4%)
+        const pseiFluctuation = (Math.random() * 25 - 12);
+        const spyFluctuation = (Math.random() * 15 - 7.5);
+
+        // Standard default baseline definitions if hardcoded items are selected
+        let currentPsei = 7240.50 + pseiFluctuation;
+        let currentSpy = 5710.25 + spyFluctuation;
+
+        const pseiTrendPct = (((currentPsei - 7240.50) / 7240.50) * 100).toFixed(2);
+        const spyTrendPct = (((currentSpy - 5710.25) / 5710.25) * 100).toFixed(2);
+
+        if (pseiDisplay) {
+            const isPseiUp = pseiTrendPct >= 0;
+            pseiDisplay.textContent = `${currentPsei.toLocaleString(undefined, {maximumFractionDigits: 2})} (${isPseiUp ? '+' : ''}${pseiTrendPct}%)`;
+            pseiDisplay.style.color = isPseiUp ? "var(--neon-green)" : "#ff4136";
+        }
+
+        if (spyDisplay) {
+            const isSpyUp = spyTrendPct >= 0;
+            spyDisplay.textContent = `${currentSpy.toLocaleString(undefined, {maximumFractionDigits: 2})} (${isSpyUp ? '+' : ''}${spyTrendPct}%)`;
+            spyDisplay.style.color = isSpyUp ? "var(--neon-green)" : "#ff4136";
+        }
+    }, 4000); // Ticks every 4 seconds to simulate active telemetry streams
+}
+
+// --- BATCH 12: REGISTRATION LIFE-CYCLE SWEEP ---
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+        initializeCommunicationsHub();
+        startLiveStockMarketDataStream();
+        console.log("📡 Communications Hub and Live Market Data Loop channels are fully active!");
+    }, 900);
+});
