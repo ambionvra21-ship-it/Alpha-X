@@ -430,3 +430,130 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// --- BATCH 6: CUSTOM WIDGET & PLUGIN EXTENSION MODULES ---
+
+// 🎵 Reusable Ambient Sound Player Plugin Object
+const AmbientSoundPlugin = {
+    audioContext: null,
+    activeNodes: {},
+
+    // Generates genuine procedural synthesizer noise frequencies right in the browser
+    generateProceduralNoise(type, targetBtn) {
+        try {
+            if (!this.audioContext) {
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // If sound is already running, turn it off safely
+            if (this.activeNodes[type]) {
+                this.activeNodes[type].stop();
+                delete this.activeNodes[type];
+                targetBtn.classList.remove('active');
+                targetBtn.textContent = 'OFF';
+                return;
+            }
+
+            // Set up synthesizer buffers for procedural sound generation
+            const bufferSize = 2 * this.audioContext.sampleRate;
+            const noiseBuffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
+            const outputBuffer = noiseBuffer.getChannelData(0);
+
+            for (let i = 0; i < bufferSize; i++) {
+                const whiteNoise = Math.random() * 2 - 1;
+                // Pink/Rain filter modeling math approximation
+                outputBuffer[i] = type === 'rain' ? whiteNoise * 0.35 : whiteNoise * 0.15;
+            }
+
+            const noiseSource = this.audioContext.createBufferSource();
+            noiseSource.buffer = noiseBuffer;
+            noiseSource.loop = true;
+
+            const gainNode = this.audioContext.createGain();
+            // Lower ambient baseline level for subtle workspace background sounds
+            gainNode.gain.value = type === 'rain' ? 0.25 : 0.15;
+
+            noiseSource.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
+
+            noiseSource.start();
+            this.activeNodes[type] = noiseSource;
+            targetBtn.classList.add('active');
+            targetBtn.textContent = 'ON';
+
+        } catch (err) {
+            console.error("Audio Context initialization blocked by browser policy:", err);
+            alert("Click anywhere on the web page workspace first, then activate sounds!");
+        }
+    }
+};
+
+// ✍️ Dedicated Email Generator Utility Module
+function executeLiveEmailGeneration() {
+    const toneElement = document.getElementById('email-tone');
+    const contextElement = document.getElementById('email-context');
+    if (!toneElement || !contextElement) return;
+
+    const rawContext = contextElement.value.trim();
+    if (!rawContext) {
+        alert("Please enter a few core bullet points or details inside the prompt box first!");
+        return;
+    }
+
+    const assignedTone = toneElement.value;
+    let templateBlueprint = '';
+
+    // Advanced, highly structured structural text output engines
+    if (assignedTone === 'formal') {
+        templateBlueprint = `Dear Professional Team,\n\nI hope this message finds you well. I am writing to formally communicate the following updates:\n\n• ${rawContext.replace(/\n/g, '\n• ')}\n\nPlease let me know your thoughts or availability regarding these items at your earliest convenience.\n\nBest regards,\n[Your Name]\nDevilmycry666 Workspace Control`;
+    } else if (assignedTone === 'casual') {
+        templateBlueprint = `Hey folks!\n\nJust wanted to quickly check in and drop some updates about this:\n\n"${rawContext}"\n\nLet me know what you think when you get a second. Catch you later!\n\nCheers,\n[Your Name]`;
+    } else if (assignedTone === 'urgent') {
+        templateBlueprint = `⚠️ URGENT PROTOCOL NOTICE ⚠️\n\nATTENTION: Please review these operational items immediately:\n\n>>> ${rawContext.toUpperCase()}\n\nAction is required regarding this matter as soon as possible to avoid systemic workspace blockers.\n\nThank you,\n[Your Name]`;
+    }
+
+    // Smoothly populate back into textarea container layout view
+    contextElement.value = templateBlueprint;
+}
+
+// --- BATCH 7: WIDGET BINDING EXTENSION INITIALIZATION LOOP ---
+function initializeCustomWidgetsAndExtensions() {
+    console.log("🛠️ Hooking up custom widget extensions...");
+
+    // 1. Hook up the Ambient Sound buttons perfectly
+    const soundRows = document.querySelectorAll('.audio-control-row');
+    soundRows.forEach(row => {
+        const textLabel = row.querySelector('span').textContent.toLowerCase();
+        const toggleButton = row.querySelector('.toggle-switch-btn');
+        
+        if (toggleButton) {
+            if (textLabel.includes('rain')) {
+                toggleButton.setAttribute('onclick', ''); // Clear outdated markup attributes
+                toggleButton.addEventListener('click', function() {
+                    AmbientSoundPlugin.generateProceduralNoise('rain', this);
+                });
+            } else if (textLabel.includes('white')) {
+                toggleButton.setAttribute('onclick', ''); 
+                toggleButton.addEventListener('click', function() {
+                    AmbientSoundPlugin.generateProceduralNoise('white', this);
+                });
+            }
+        }
+    });
+
+    // 2. Hook up the Smart Email Builder button cleanly
+    const emailDrafterCard = document.getElementById('email-drafter');
+    if (emailDrafterCard) {
+        const actionButton = emailDrafterCard.querySelector('.btn-primary');
+        if (actionButton) {
+            actionButton.setAttribute('onclick', ''); // Clear old bindings
+            // Overwrite with our active builder function logic
+            actionButton.addEventListener('click', executeLiveEmailGeneration);
+        }
+    }
+}
+
+// Re-register initialization sweep
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initializeCustomWidgetsAndExtensions, 200);
+});
